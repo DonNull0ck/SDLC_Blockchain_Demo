@@ -1,0 +1,94 @@
+EHR_Record = {
+	  "Patient ID": " ",
+	  "Patient Name:"" {
+        FirstName: '{{firstName()}}',
+        LastName: '{{surname()}}'
+      },
+	  "Insurance Group Number": "".
+	  "Insurance Plan": "",
+	  "Dependent(s) ID": "".
+	  "Dependent(s)": "",
+    "Date Of Birth": " " ,
+    "Current Age": " " ,
+    "SSN": " " ,
+     "Address: {
+        "Street": '{{street()}}',
+        "City": '{{city()}}',
+        "State": '{{state()}}',
+        "Zip Code": '{{zipCode()}}'
+      },
+    "Phone Number": "",
+    "Email Address": "",
+    "Employer": " ",
+    "Emergency Contact Name": ", 
+    "Emergency Contact Phone Number": "",
+    "Emergency Contact Relationship": "",
+    "Reason For Referal": " " ,
+    "Primary Care Provider": " " ,
+    "Service(s) Provided": " " ,
+		"Date Service Provided": "",
+		"Medical History": " " ,
+		"Allergies": " " ,
+		"Current Medications": " " ,
+		"Medical Image(s) On File": " ",
+		"Diagnosis": " ",
+		"Treatment Plan/Recommendations":, 
+		"Medicial Professional's Name": " " ,
+		
+    }
+ }
+ 
+ //json generator code below, guid and objectID are alphanumeric
+ 
+ https://next.json-generator.com
+ 
+ [
+  {
+    'repeat(5, 10)': {
+	_PatientID: '{{integer(20, 40)}}',
+      InsuranceGroupNumber: '{{index()}}',
+      SSN: '{{index()}}',
+      DependentID: '{{index()}}',
+      InsurancePlan: '{{integer(20, 40)}}',
+      DependentsOnFile: '{{bool()}}',
+      MedicalImagesOnFile: 'http://placehold.it/32x32',
+      Age: '{{integer(20, 40)}}',
+      Employer: '{{random("None","PNC", "UPMC", "HMHS")}}',
+      Diagnosis:  '{{random("Flu", "Cold", "Plague")}}',
+      Treatment:  '{{random("Checkup", "Prescription", "Surgery")}}',
+      DoctorName: {
+        first: 'Dr.' + '{{firstName()}}',
+        last: '{{surname()}}'
+      },
+      MedicalHistory: '{{random("None", "Sick", "Injured")}}',
+      Allergies: '{{random("None","Mold", "Peanut", "Shellfish")}}',
+      CurrentMedications: ' {{random("None","Aspirin", "Vicodin", "Naproxin")}}',
+      PCP: {
+        first: 'Dr.' + '{{firstName()}}',
+        last: '{{surname()}}'
+      },
+      ReferralReason: '{{random("Sick", "Injured", "Other")}}',
+      ServicesProvided: '{{random("Checkup", "Prescription", "Surgery")}}',
+      name: {
+        first: '{{firstName()}}',
+        last: '{{surname()}}'
+      },
+       dependentname: {
+        first: '{{firstName()}}',
+        last: '{{surname()}}'
+      },
+     
+      email(tags) {
+        return `${this.name.first}.${this.name.last}@${this.company}${tags.domainZone()}`.toLowerCase();
+      },
+      phone: '+1 {{phone()}}',
+      emergencyphone: '+1 {{phone()}}',
+      address: '{{integer(100, 999)}} {{street()}}, {{city()}}, {{state()}}, {{integer(100, 10000)}}',
+
+      DateOfBirth: '{{moment(this.date(new Date(2014, 0, 1), new Date())).format("LLLL")}}',
+      DateServiceProvided: '{{moment(this.date(new Date(2014, 0, 1), new Date())).format("LLLL")}}'
+    
+      }
+    }
+  
+]
