@@ -17,6 +17,7 @@ contract SupPro {
 	string Employer;
 	string InsurancePlan;
 	uint InsuranceGroupNumber;
+	address PaymentAddress; 
 	
 	struct Supplies 
 	{
@@ -42,8 +43,10 @@ contract SupPro {
 		string Bill_ID;
 		string BillStatus;
 		uint BillCost;
-		string BillIssuedTo;
-		string BillIssuedBy; 
+		string BillIssuedToName;
+		string BillIssuedByName;
+		string BillIssuedTo_ID;
+		uint BillIssuedBy_ID;		
 	}
 	struct Payments 
 	{

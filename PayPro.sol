@@ -14,6 +14,8 @@ contract PayPro {
 	string EmailAddress;
 	string Phone;
 	string Employer;
+	address PaymentAddress; 
+	
 	struct Claims
 	{
 		string ClaimName;
@@ -28,24 +30,28 @@ contract PayPro {
 		string Bill_ID;
 		string BillStatus;
 		uint BillCost;
-		string BillIssuedTo;
-		string BillIssuedBy; 
+		string BillIssuedToName;
+		string BillIssuedByName; 
+		uint BillIssuedTo_ID;
+		uint BillIssuedBy_ID; 
 	}
 	struct Payments 
 	{
 		string Payment_ID;
 		string Bill_ID;
 		string Payment_Amount;
-		string PaymentIssuedTo;
-		string PaymentIssuedBy;	
+		string PaymentIssuedToName;
+		string PaymentIssuedByName;	
+		uint PaymentIssuedTo_ID;
+		uint PaymentIssuedBy_ID;	
 	}
 	struct Inquiries 
 	{
-		string Inquiry_ID;
+		uint Inquiry_ID;
 		string InquirerName;
-		string InquirerID;
+		uint Inquirer_ID;
 		string InquiryAssignedToName;
-		string InquiryAssignedToID;
+		uint InquiryAssignedTo_ID;
 	    string InquirerDescription;
 		string InquiryStatus;
 		string InquiryOpenDate;

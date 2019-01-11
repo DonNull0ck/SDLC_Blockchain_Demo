@@ -6,7 +6,7 @@ pragma solidity ^0.4.0; //pay attention to compiler version to avoid issues
 contract MedPro { 
 
 	string Name;
-	uint MedPro_ID;
+	string MedPro_ID;
 	string SSN;
 	string DateOfBirth;
 	uint Age;
@@ -22,6 +22,7 @@ contract MedPro {
 	uint TreatmentCostMax;
 	uint TreatmentCostMin;
 	string PatientFormID; 
+	address PaymentAddress; 
 	
 	//Examples: Exam, Surgery, Prescription, etc. 
 	struct Treatments {
@@ -55,25 +56,29 @@ contract MedPro {
 		uint Bill_ID;
 		string BillStatus;
 		uint BillCost;
-		string BillIssuedTo;
-		string BillIssuedBy; 
+		string BillIssuedToName;
+		string BillIssuedByName; 
+		string BillIssuedTo_ID;
+		string BillIssuedBy_ID; 
 	}
 	struct Payments 
 	{
 		string Payment_ID;
 		string Bill_ID;
 		string Payment_Amount;
-		string PaymentIssuedTo;
-		string PaymentIssuedBy;	
+		string PaymentIssuedToName;
+		uint PaymentIssuedTo_ID
+		string PaymentIssuedByName;	
+		uint PaymentIssuedBy_ID
 	}
 	//Examples: Bill Dispute, Supply Delivery, Supply Repair, etc. 
 	struct Inquiries 
 	{
-		string Inquiry_ID;
+		uint Inquiry_ID;
 		string InquirerName;
-		string InquirerID;
+		uint Inquirer_ID;
 		string InquiryAssignedToName;
-		string InquiryAssignedToID;
+		uint InquiryAssignedTo_ID;
 	    string InquirerDescription;
 		string InquiryStatus;
 		string InquiryOpenDate;
