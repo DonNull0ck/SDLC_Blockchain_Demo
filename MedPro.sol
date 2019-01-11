@@ -26,25 +26,25 @@ contract MedPro {
 	//Examples: Exam, Surgery, Prescription, etc. 
 	struct Treatments {
 		string TreatmentName;
-		string TreatmentID;
-		string TreatmentSuppliesNeeded[];
-		string TreatmentSupplyID[];
+		uint TreatmentID;
+		string[] TreatmentSuppliesNeeded;
+		string[] TreatmentSupplyID;
 		uint TreatmentCost;
 	}
 	//Examples: MRI machine, Antibiotics, Scalpel
 	struct Supplies 
 	{
 		string SupplyName;
-		string SupplyID;
+		uint SupplyID;
 		uint SupplyCost;
-		string SupplyRelatedTreatments[];
-		string SupplyRelatedTreatmentIDs[];
-		string SupplyStatusScapel
+		string[] SupplyRelatedTreatments;
+		string[] SupplyRelatedTreatmentIDs;
+		string SupplyStatusScapel;
 	}
 	struct Claims
 	{
 		string ClaimName;
-		string Claim_ID;
+		uint Claim_ID;
 		bool ClaimStatus;
 		uint ClaimCostPatient;
 		uint ClaimCostInsurance;
@@ -52,7 +52,7 @@ contract MedPro {
 	struct Bills 
 	{
 		string BillName;
-		string Bill_ID;
+		uint Bill_ID;
 		string BillStatus;
 		uint BillCost;
 		string BillIssuedTo;
@@ -73,9 +73,28 @@ contract MedPro {
 		string InquirerName;
 		string InquirerID;
 		string InquiryAssignedToName;
-		string  InquiryAssignedToID;
+		string InquiryAssignedToID;
 	    string InquirerDescription;
 		string InquiryStatus;
 		string InquiryOpenDate;
 		string InquiryCloseDate;
 	}
+	
+	/*functions
+	
+	collectPHI
+	sendPHI
+	updatePHI ?
+	diagnosePatient
+	treatPatient
+    createClaim
+	updateClaim
+	requestSupply
+	requestSupplyRepair
+	submitInquiry
+	resolveInquiry
+	
+	
+	*/
+	
+}

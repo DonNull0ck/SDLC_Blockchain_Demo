@@ -9,7 +9,7 @@ contract Supply {
 		string SupplyID;
 		uint SupplyCost;
 		string[] SupplyRelatedTreatments;
-		string[] SupplyRelatedTreatments_ID
-		string SupplyStatus
+		string[] SupplyRelatedTreatments_ID;
+		string SupplyStatus;
 
 }

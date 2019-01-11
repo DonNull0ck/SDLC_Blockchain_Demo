@@ -45,11 +45,26 @@ contract PayPro {
 		string InquirerName;
 		string InquirerID;
 		string InquiryAssignedToName;
-		string  InquiryAssignedToID;
+		string InquiryAssignedToID;
 	    string InquirerDescription;
 		string InquiryStatus;
 		string InquiryOpenDate;
 		string InquiryCloseDate;
 	}
+	
+	/* functions
+	
+	sendPHI
+	receivePHI
+	submitClaim
+	processClaim
+	editClaim
+	processPayment
+	editPayment
+	submitPayment
+	resolveInquiry
+
+	
+	*/
 	
 }

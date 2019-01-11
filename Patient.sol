@@ -62,5 +62,14 @@ contract Patient {
 		string InquiryCloseDate;
 	}
 	
-	
+	/*functions: 
+	makeAppointment
+	cancelAppointment
+	confirmAppointment
+	createPHI
+	sendPHI
+	updatePHI ?
+	payBill
+	submitInquiry
+	*/
 }
