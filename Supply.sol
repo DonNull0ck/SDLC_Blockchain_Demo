@@ -1,8 +1,9 @@
 //import solidity
 
-pragma solidity ^0.4.0; //pay attention to compiler version to avoid issues
+pragma solidity >=0.4.2 <0.6.0;
+//pay attention to compiler version to avoid issues
 
-contract Supply { 
+contract Supply {
 
 		//work in progress
 		string SupplyName;

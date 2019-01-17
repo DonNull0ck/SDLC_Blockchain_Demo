@@ -1,43 +1,46 @@
 //import solidity
 
-pragma solidity ^0.4.0; //pay attention to compiler version to avoid issues
+pragma solidity >=0.4.2 <0.6.0;
+//pay attention to compiler version to avoid issues
 
+//generalized class/contract, could be a pharmacist, office manager, medical equipment tech, etc.
+contract SupPro {
 
-//generalized class/contract, could be a pharmacist, office manager, medical equipment tech, etc. 
-contract SupPro { 
-
-	string Name;
+	string SupProName;
+	uint SupPro_ID;
 	uint Patient_ID;
-	string SSN;
-	string DateOfBirth;
-	uint Age;
-	string FullAddress;
-	string EmailAddress;
-	string Phone;
-	string Employer;
-	string InsurancePlan;
-	uint InsuranceGroupNumber;
-	address PaymentAddress; 
-	
-	struct Supplies 
+	string PatientName;
+	string SupProSSN;
+	string SupProDateOfBirth;
+	uint SupProAge;
+	string SupProFullAddress;
+	string SupProEmailAddress;
+	string SupProPhone;
+	string SupProEmployer;
+	string SupProInsurancePlan;
+	uint PatientInsuranceGroupNumber;
+	address SupProPaymentAddress;
+
+	struct Supplies
 	{
 		string SupplyName;
 		string SupplyID;
 		uint SupplyCost;
 		string[] SupplyRelatedTreatments;
 		string[] SupplyRelatedTreatments_ID;
-		string SupplyStatus;
+		bool SupplyFunctional;
 	}
-	
+
 	struct Claims
 	{
 		string ClaimName;
 		string Claim_ID;
-		bool ClaimStatus;
+		bool ClaimSubmitted;
+		bool ClaimConfirmed;
 		uint ClaimCostPatient;
 		uint ClaimCostInsurance;
 	}
-	struct Bills 
+	struct Bills
 	{
 		string BillName;
 		string Bill_ID;
@@ -46,17 +49,17 @@ contract SupPro {
 		string BillIssuedToName;
 		string BillIssuedByName;
 		string BillIssuedTo_ID;
-		uint BillIssuedBy_ID;		
+		uint BillIssuedBy_ID;
 	}
-	struct Payments 
+	struct Payments
 	{
 		string Payment_ID;
 		string Bill_ID;
 		string Payment_Amount;
 		string PaymentIssuedTo;
-		string PaymentIssuedBy;	
+		string PaymentIssuedBy;
 	}
-	struct Inquiries 
+	struct Inquiries
 	{
 		string Inquiry_ID;
 		string InquirerName;
@@ -68,7 +71,7 @@ contract SupPro {
 		string InquiryOpenDate;
 		string InquiryCloseDate;
 	}
-	
+
 	/* functions
 	viewSupplies
 	addSupplies
@@ -77,7 +80,7 @@ contract SupPro {
 	processPayment
 	submitPayment
 	resolveInquiry
-	
+
 	*/
-	
+
 }

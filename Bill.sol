@@ -1,8 +1,9 @@
 //import solidity
 
-pragma solidity ^0.4.0; //pay attention to compiler version to avoid issues
+pragma solidity >=0.4.2 <0.6.0;
+//pay attention to compiler version to avoid issues
 
-contract Bill { 
+contract Bill {
 
 		string BillName;
 		string Bill_ID;
@@ -21,14 +22,14 @@ contract Bill {
 		string BillIssuedToPhone;
 		string BillIssuedFromPhone;
 
-		
+
 		struct ItemizedBill{
-		
+
 		string ItemName;
 		string Item_ID;
 		string ItemServiceDate;
 		uint Item_Cost;
-		
+
 		}
 
 }

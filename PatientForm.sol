@@ -1,10 +1,11 @@
 //import solidity
 
-pragma solidity ^0.4.0; //pay attention to compiler version to avoid issues
+pragma solidity >=0.4.2 <0.6.0;
+//pay attention to compiler version to avoid issues
 
-contract PatientForm { 
+contract PatientForm {
 
-	//work in progress 
+	//work in progress
 	string PatientName;
 	uint Patient_ID;
 	uint PatientForm_ID;
@@ -24,6 +25,6 @@ contract PatientForm {
 	string PrimaryCarePhysician;
 	string MedicalHistory;
 	string Allergies;
-	
-	
+
+
 }

@@ -113,21 +113,14 @@ contract Patient {
 	viewClaim
 	*/
 
-//make a new appointment
-function makeAppointment(struct Appointments) internal returns (struct myAppointment)
+//make a new appointment (first rewwritten function)
+function makeAppointment(string AppointmentName, uint Appointment_ID, string AppointmentDateTime,
+	string AppointmentPatientName, string AppointmentName)
+	) public returns (string AppointmentName, uint Appointment_ID, string AppointmentDateTime,
+		string AppointmentPatientName, string AppointmentName)
 {
 
-//patient portion of appointment
-Appointments myAppointment = Appointments
-({
-AppointmentName: myAppointment1,
-Appointment_ID: 1,
-AppointmentDateTime: now + 2,
-AppointmentPatientName: PatientFullName,
-AppointmentPatientID: Patient_ID
-})
-
-return myAppointment;
+appointments[Appointment_ID] = Appointments("My Appointment", 1, (now + 2), "John Smith", 1 )
 
 	}
 

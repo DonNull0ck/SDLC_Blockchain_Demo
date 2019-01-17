@@ -1,6 +1,6 @@
 //import solidity
 
-pragma solidity ^0.4.0; //pay attention to compiler version to avoid issues
+pragma solidity ^0.4.2; //pay attention to compiler version to avoid issues
 
 contract Claim { 
 

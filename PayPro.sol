@@ -1,9 +1,10 @@
 //import solidity
 
-pragma solidity ^0.4.0; //pay attention to compiler version to avoid issues
+pragma solidity >=0.4.2 <0.6.0;
+ //pay attention to compiler version to avoid issues
 
-//generalized class/contract, could be a payment specialist, customer support rep, data analyst, etc. 
-contract PayPro { 
+//generalized class/contract, could be a payment specialist, customer support rep, data analyst, etc.
+contract PayPro {
 
 	string Name;
 	uint PayPro_ID;
@@ -14,38 +15,39 @@ contract PayPro {
 	string EmailAddress;
 	string Phone;
 	string Employer;
-	address PaymentAddress; 
-	
+	address PaymentAddress;
+
 	struct Claims
 	{
 		string ClaimName;
 		string Claim_ID;
-		bool ClaimStatus;
+		bool ClaimSubmitted;
+		bool ClaimConfirmed;
 		uint ClaimCostPatient;
 		uint ClaimCostInsurance;
 	}
-	struct Bills 
+	struct Bills
 	{
 		string BillName;
 		string Bill_ID;
-		string BillStatus;
+		bool BillPaid;
 		uint BillCost;
 		string BillIssuedToName;
-		string BillIssuedByName; 
+		string BillIssuedByName;
 		uint BillIssuedTo_ID;
-		uint BillIssuedBy_ID; 
+		uint BillIssuedBy_ID;
 	}
-	struct Payments 
+	struct Payments
 	{
 		string Payment_ID;
 		string Bill_ID;
 		string Payment_Amount;
 		string PaymentIssuedToName;
-		string PaymentIssuedByName;	
+		string PaymentIssuedByName;
 		uint PaymentIssuedTo_ID;
-		uint PaymentIssuedBy_ID;	
+		uint PaymentIssuedBy_ID;
 	}
-	struct Inquiries 
+	struct Inquiries
 	{
 		uint Inquiry_ID;
 		string InquirerName;
@@ -53,13 +55,14 @@ contract PayPro {
 		string InquiryAssignedToName;
 		uint InquiryAssignedTo_ID;
 	    string InquirerDescription;
-		string InquiryStatus;
+		bool InquiryOpen;
+		bool InquiryClosed;
 		string InquiryOpenDate;
 		string InquiryCloseDate;
 	}
-	
+
 	/* functions
-	
+
 	sendPHI
 	receivePHI
 	submitClaim
@@ -70,7 +73,7 @@ contract PayPro {
 	submitPayment
 	resolveInquiry
 
-	
+
 	*/
-	
+
 }
