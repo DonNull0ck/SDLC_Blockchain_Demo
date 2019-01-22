@@ -6,8 +6,7 @@ import './Signup.css';
 
 const errorMessage = {
       color: 'red',
-      textAlign: 'center',
-      display:'none'
+      textAlign: 'center'
 };
 
 class Signup extends Component {
@@ -22,6 +21,7 @@ class Signup extends Component {
       EmailAddress: '',
       stackId: null
     };
+
   this.handleInputChange = this.handleInputChange.bind(this);
   this.handleSubmit = this.handleSubmit.bind(this);
 }
@@ -51,7 +51,7 @@ class Signup extends Component {
           this.state.DateOfBirth,
           this.state.EmailAddress,
          {
-          from: drizzleState.accounts[0]});
+          from: drizzleState.accounts[0], gas: 500000});
         // save the `stackId` for later reference
       this.setState({ stackId });
     }catch(error){
@@ -61,12 +61,12 @@ class Signup extends Component {
     }
     
     // if successfully posted the data
-    if(this.getTxStatus()){
-      this.props.history.push('/appointments');
-    }else {
-      //this.setState({errorPosting:true});
-      document.getElementById("errorMessage").style.display = 'block';
-    }
+    // if(this.getTxStatus()){
+    //   this.props.history.push('/appointments');
+    // }else {
+    //   //this.setState({errorPosting:true});
+    //   document.getElementById("errorMessage").style.display = 'block';
+    // }
     
   }
 
@@ -82,18 +82,19 @@ class Signup extends Component {
     if (!txHash) return null;
 
     // otherwise, return the transaction status
-    return true;
-    //`Transaction status: ${transactions[txHash].status}`;
+    return transactions[txHash].status;
   };
 
 
 
   render() {
-    
+    if(this.getTxStatus() == "success"){
+      this.props.history.push('/appointments');
+    }
     return (
       <div className="container singup-form-container">
         <h2>Signup Here</h2>
-          <p id="errorMessage" style={errorMessage}>Error occured while posting!</p>
+          <p id="errorMessage" style={errorMessage}>{this.getTxStatus() == "error" ? <span>Transaction Error!</span>:null}</p>
       <form  method="POST" name="SignupForm" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <input 
