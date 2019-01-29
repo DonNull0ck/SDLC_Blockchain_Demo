@@ -1,0 +1,25 @@
+.react-datepicker{
+	width: 300px;
+	font-size: 1.8rem;
+}
+.react-datepicker__month-container{
+	width: 298px;
+}
+.react-datepicker__current-month{
+	font-size: 1.8rem;
+}
+.react-datepicker__day-name{
+	padding: 18px;
+}
+.react-datepicker__day, .react-datepicker__day--selected{
+	padding-right: 25px;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.react-datepicker__day--selected{
+	padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 8px;
+
+}

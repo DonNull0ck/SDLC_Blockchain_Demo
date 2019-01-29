@@ -4,22 +4,19 @@ import { Redirect} from 'react-dom';
 
 import './Signup.css';
 
-const errorMessage = {
-      color: 'red',
-      textAlign: 'center'
-};
 
 class Signup extends Component {
   constructor (props) {
   super(props);
   this.state = {
-      PatientName: 'Bhim Dahal',
-      Patient_ID: '',
-      PatientForm_ID: '',
-      SSN: '',
+      PatientName: 'Jane Doe',
+      Patient_ID: '123',
+      PatientForm_ID: '1234',
+      SSN: '123-45-6789',
       DateOfBirth: '',
-      EmailAddress: '',
-      stackId: null
+      EmailAddress: 'janedoe@test.com',
+      stackId: null,
+      contractError: false
     };
 
   this.handleInputChange = this.handleInputChange.bind(this);
@@ -39,11 +36,17 @@ class Signup extends Component {
     console.log('A form is submitted: ' + event);
     event.preventDefault();
     const { drizzle, drizzleState } = this.props;
+    
+    // let drizzle know we want to call the `setPatient` method with `value`
     const contract = drizzle.contracts.RegisterPatient;
 
-    // let drizzle know we want to call the `setPatient` method with `value`
-    try {
-        const stackId = contract.methods["setPatient"].cacheSend(
+    if(!contract){
+        this.setState({contractError:true});
+        return;
+    }
+
+    const stackId = contract.methods["setPatient"].cacheSend(
+          drizzleState.accounts[0],
           this.state.PatientName,
           this.state.Patient_ID,
           this.state.PatientForm_ID,
@@ -53,21 +56,8 @@ class Signup extends Component {
          {
           from: drizzleState.accounts[0], gas: 500000});
         // save the `stackId` for later reference
-      this.setState({ stackId });
-    }catch(error){
-      document.getElementById("errorMessage").style.display = 'block';
-      console.error(error);
-      return;
-    }
-    
-    // if successfully posted the data
-    // if(this.getTxStatus()){
-    //   this.props.history.push('/appointments');
-    // }else {
-    //   //this.setState({errorPosting:true});
-    //   document.getElementById("errorMessage").style.display = 'block';
-    // }
-    
+        this.setState({ stackId });
+      
   }
 
   // get transaction status
@@ -85,6 +75,21 @@ class Signup extends Component {
     return transactions[txHash].status;
   };
 
+  // get transaction obj
+  getTx = () => {
+    // get the transaction states from the drizzle state
+    const { transactions, transactionStack } = this.props.drizzleState;
+
+    // get the transaction hash using our saved `stackId`
+    const txHash = transactionStack[this.state.stackId];
+
+    // if transaction hash does not exist, don't display anything
+    if (!txHash) return null;
+
+    // otherwise, return the transaction status
+    return transactions[txHash];
+  };
+
 
 
   render() {
@@ -94,7 +99,8 @@ class Signup extends Component {
     return (
       <div className="container singup-form-container">
         <h2>Signup Here</h2>
-          <p id="errorMessage" style={errorMessage}>{this.getTxStatus() == "error" ? <span>Transaction Error!</span>:null}</p>
+          <p className="errorMessage">{this.state.contractError == true ? <span>Internal Error, Please try again later!</span>:null}</p>
+          <p  className="errorMessage">{this.state.stackId != null? <span>Transaction Status:{this.getTxStatus()}</span>:null}</p>
       <form  method="POST" name="SignupForm" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <input 

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import Signup from './patient_form/Signup'
+import Signup from './patient_form/Signup' 
 import Appointments from './appointments/Appointments'
+import Profile from './profile/Profile'
+
+
 
 import  { Link, Route, Switch } from 'react-router-dom';
 
@@ -10,8 +13,9 @@ import './App.css';
 const progressbar = {
   width:'100%',
   position: 'absolute',
-  top: '50px'
+  top: '0px'
 };
+
 
 class App extends Component {
   state = {
@@ -33,6 +37,7 @@ class App extends Component {
                     drizzleState
                 });
             }
+
         });
   }
 
@@ -77,7 +82,13 @@ class App extends Component {
               render={(props) => <Appointments {...props} 
               drizzle={this.props.drizzle}
               drizzleState={this.state.drizzleState}/>}
-             />  
+             />
+             <Route 
+              path="/profile" 
+              render={(props) => <Profile {...props} 
+              drizzle={this.props.drizzle}
+              drizzleState={this.state.drizzleState}/>}
+             />    
             </Switch>
       
         </header>
