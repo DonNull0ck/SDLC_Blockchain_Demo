@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Signup from './patient_form/Signup' 
 import Appointments from './appointments/Appointments'
 import Profile from './profile/Profile'
+import Home from './home/home'
+import CreateProfile from './home/register'
+
 
 
 
@@ -88,7 +91,12 @@ class App extends Component {
               render={(props) => <Profile {...props} 
               drizzle={this.props.drizzle}
               drizzleState={this.state.drizzleState}/>}
-             />    
+             />  
+            <Route 
+              path="/home" 
+              render={()=><Home/>}
+             />
+            
             </Switch>
       
         </header>

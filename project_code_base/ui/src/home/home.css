@@ -1,0 +1,58 @@
+.hero-container {
+	color:white;
+	justify-content: left;
+    text-align: left;
+}
+.hero-container .glyphicon{
+	font-size: 12px;
+}
+.hero-container .txt{
+	font-size: 10px;
+	padding-left:5px;
+}
+.hero-container .user{
+	background-color: #15171b7d;
+	padding: 20px 0px 20px 10px;
+
+}
+.hero-container .appointments{
+	background-color: #203520;
+	padding-left: 10px;
+	padding-top:40px;
+	padding-bottom: 40px;
+}
+
+.span-block{
+	display: block;
+	padding-left: 15px !important;
+}
+
+.par {
+	font-size: 14px;
+	color:black;
+}
+.form-padding-left{
+	padding-left:15px;
+}
+.form-padding-right{
+	padding-right:15px;
+}
+.searchResults{
+	padding:145px;
+	text-align: center;
+	background-color: #fff;
+	box-shadow: -1px 0px 1px 0px #0000004f;
+
+}
+.doctor-card{
+	color: black;
+	padding-bottom: 30px;
+    padding-top: 10px;
+    border-bottom: 1px solid #96a0a5e3;
+}
+.panel .panel-body{
+	text-align: left;
+}
+.register-user{
+	color: black;
+}
