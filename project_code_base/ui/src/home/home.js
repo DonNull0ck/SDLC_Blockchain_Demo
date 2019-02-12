@@ -11,6 +11,13 @@ const inputKeyword = {
 const inputProvider = {
       'width': '230px'
 };
+const heroStyle = {
+      'border': '20px solid #444444'
+};
+const userColStyle = {
+      'paddingLeft': '0px',
+      'paddingRight': '50px'
+};
 
 class Home extends Component {
   constructor (props) {
@@ -39,28 +46,28 @@ handleSubmit(event) {
   render() {
     return (
       <div className="container hero-container">
-        <div className="row">
-          <div className="col-sm-2">
+        <div className="row" style={heroStyle}>
+          <div className="col-sm-2 left-nav" style={userColStyle}>
             <div className="user">
               <h4>APP NAME</h4>
               <span className="glyphicon glyphicon-user"></span>
-              <span className="txt">Log in</span>
-              <span className="txt span-block">Sign up</span>
+              <span className="txt"><a href="">Log in</a></span>
+              <span className="txt span-block"><a href="">Sign up</a></span>
             </div>
             <div className="appointments">
             <p>
               <span className="glyphicon glyphicon-home"></span>
-              <span className="txt">MY</span>
-              <span className="txt span-block">APPOINTMENTS</span>
+              <a href=""><span className="txt">MY</span>
+              <span className="txt span-block">APPOINTMENTS</span></a>
             </p>
             <p>
               <span className="glyphicon glyphicon-user"></span>
-              <span className="txt">PROFILE</span>
+              <span className="txt"><a href="">PROFILE</a></span>
             </p>
             <p>
               <span className="glyphicon glyphicon-calendar"></span>
-              <span className="txt">SCHEDULE AN</span>
-              <span className="txt span-block">APPOINTMENT</span>
+              <a href=""><span className="txt">SCHEDULE AN</span>
+              <span className="txt span-block">APPOINTMENT</span></a>
             </p>
             </div>
           </div>

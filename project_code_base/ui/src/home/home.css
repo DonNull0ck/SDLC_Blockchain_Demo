@@ -11,15 +11,25 @@
 	padding-left:5px;
 }
 .hero-container .user{
-	background-color: #15171b7d;
+	background-color: #263238;
 	padding: 20px 0px 20px 10px;
 
 }
+.left-nav a{
+	color: #fff;
+	text-decoration: none;
+}
+.left-nav a:hover{
+	text-decoration: none;
+	color:#3269a5;
+}
 .hero-container .appointments{
-	background-color: #203520;
+	background-color: #37474F;
 	padding-left: 10px;
 	padding-top:40px;
 	padding-bottom: 40px;
+	height: -webkit-fill-available;
+
 }
 
 .span-block{
@@ -42,6 +52,7 @@
 	text-align: center;
 	background-color: #fff;
 	box-shadow: -1px 0px 1px 0px #0000004f;
+	margin-top:25px;
 
 }
 .doctor-card{
@@ -50,8 +61,18 @@
     padding-top: 10px;
     border-bottom: 1px solid #96a0a5e3;
 }
+.doctor-card .apt-selector{
+	width: 400px;
+	margin-top: 15px;
+	margin-bottom:20px;
+}
 .panel .panel-body{
 	text-align: left;
+	font-size: 12px;
+}
+.panel-body label{
+	font-size: 12px !important;
+	font-weight: normal !important;
 }
 .register-user{
 	color: black;

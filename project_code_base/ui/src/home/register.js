@@ -21,7 +21,11 @@ const lgnbtnStyle = {
 
 };
 const panelStyle = {
-      'marginLeft': '30px'
+      'marginTop': '25px'
+};
+const leftPanelStyle = {
+      'marginLeft': '30px',
+      'marginTop': '25px'
 };
 
 class CreateProfile extends Component {
@@ -39,7 +43,7 @@ class CreateProfile extends Component {
     return (
       <div className="row register-user">
       <div className="col-sm-8">
-        <div className="panel panel-primary" style={panelStyle}>
+        <div className="panel panel-primary" style={leftPanelStyle}>
         <div className="panel-heading">Create Profile</div>
       <div className="panel-body">
   <form method="POST">
@@ -92,7 +96,7 @@ class CreateProfile extends Component {
       <label htmlFor="insgrp">Insurance Group Number:</label>
       <input type="text" className="form-control" placeholder="********" name="insgrp" required/>
     </div>
-    
+
     
     <button type="submit" className="btn btn-primary" style={btnStyle}>Create Profile</button>
     <button type="button" className="btn btn-default" style={lgnbtnStyle}>Login</button>
@@ -102,7 +106,7 @@ class CreateProfile extends Component {
 </div>
       </div>
       <div className="col-sm-4">
-      <div className="panel panel-primary">
+      <div className="panel panel-primary" style={panelStyle}>
           <div className="panel-heading"> Your Appointment</div>
           <div className="panel-body">
             <img src={logo} className="img-thumbnail" style={imgStyle}></img>

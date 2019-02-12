@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import logo from '../logo.svg';
 import DoctorList from './doctors-json';
@@ -13,6 +15,9 @@ const imgStyle = {
       'width': '120px',
       'height': '120px'
 };
+const cardStyle = {
+      'marginTop': '25px'
+};
 
 class Card extends Component {
   constructor (props) {
@@ -21,13 +26,20 @@ class Card extends Component {
   this.state = {
       requestApp:false,
       doctor: null,
-      createProfile:false
+      createProfile:false,
+      appointmentDate: null
     };
 
   this.clickSearch = this.clickSearch.bind(this);
   this.handleSubmit = this.handleSubmit.bind(this);
+  this.handleDate = this.handleDate.bind(this);
   }
 
+  handleDate(date) {
+    this.setState({
+      appointmentDate: date
+    });
+  }
   //requestApp = false;
   clickSearch(event){
     event.preventDefault();
@@ -51,7 +63,7 @@ class Card extends Component {
     });
       
     return (
-      <div>
+      <div style={cardStyle}>
       {arr.map((item,index) => 
       <div className="row doctor-card" key={index}>
         <div className="col-sm-3">
@@ -73,11 +85,21 @@ class Card extends Component {
         <button className="btn btn-primary" onClick={this.clickSearch}>{this.state.requestApp == false ? 'Request Appointment': 'Cancel'}</button>
       </div>
       {this.state.requestApp == true ?
-      <div className="col-sm-12">
-        <button className="btn btn-primary" style={btnStyle} onClick={(e) => this.handleSubmit(e,item)}>REQUEST APPOINTMENT</button>
-      </div>
-      :null}
-      </div>
+        <div className="col-sm-12">
+            <form method="POST">
+              <DatePicker
+                selected={this.state.appointmentDate}
+                onChange={this.handleDate}
+                minDate={new Date()}
+                placeholderText="Please select your appointment date"
+                className="apt-selector"
+                required
+              />
+            <button type="submit" className="btn btn-primary" style={btnStyle} onClick={(e) => this.handleSubmit(e,item)}>REQUEST APPOINTMENT</button>
+          </form>
+        </div>
+        :null}
+        </div>
       )}
     </div>  
     );
