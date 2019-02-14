@@ -77,3 +77,18 @@
 .register-user{
 	color: black;
 }
+
+.review-appointments ul li{
+	list-style: none;
+	display: block;
+	margin-top: 20px;
+}
+
+.review-appointments ul li button{
+	width: 200px;
+}
+.review-dashboard{
+	margin-top: 50px;
+	text-align: center;
+	margin-right: 40px;
+}
