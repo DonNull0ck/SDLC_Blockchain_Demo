@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 
+import ReviewAppointment from './review';
 
 
 const imgStyle = {
-      'width': '120px',
-      'height': '120px',
-      'marginLeft': '30%'
+	'width': '120px',
+	'height': '120px',
+	'marginLeft': '30%'
 };
 const btnStyle = {
-      'width': '120px',
-      'marginLeft': '42%'
+	'width': '120px',
+	'marginLeft': '42%'
 };
 const lgnbtnStyle = {
-      'width': '120px',
-      'display': 'block',
-      'marginLeft': '42%',
-      'marginTop': '20px',
-      'border': '2px solid #2b5c92'
+	'width': '120px',
+	'display': 'block',
+	'marginLeft': '42%',
+	'marginTop': '20px',
+	'border': '2px solid #2b5c92'
 
 };
 const panelStyle = {
-      'marginTop': '25px'
+	'marginTop': '25px'
 };
 const leftPanelStyle = {
-      'marginLeft': '30px',
-      'marginTop': '25px'
+	'marginLeft': '30px',
+	'marginTop': '25px'
 };
 
 class CreateProfile extends Component {
@@ -33,6 +34,9 @@ class CreateProfile extends Component {
   super(props);
     this.state = {
        requestApp: false,
+       reviewAppointments: false,
+       stackId:null,
+       contractError:false,
        user: {
          firstName:'Jane',
          lastName: 'Doe',
@@ -42,13 +46,12 @@ class CreateProfile extends Component {
          ssn: '123-45-6789',
          pass:'',
          insuranceProvider: 'hmbcbs',
-         insuranceGroupNumber: 'sdlc',
-         stackId:null,
-         contractError:false
+         insuranceGroupNumber: 'sdlc'
        }
       };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onReview = this.onReview.bind(this);
   }
   handleInputChange(event) {
     const target = event.target;
@@ -58,7 +61,11 @@ class CreateProfile extends Component {
     fields[name] = value;
     this.setState({fields});
   }
-
+  onReview(event) {
+    event.preventDefault();
+		this.setState({reviewAppointments:true})
+  }
+      
   handleSubmit(event) {
    event.preventDefault();
    const { drizzle, drizzleState } = this.props;
@@ -85,6 +92,7 @@ class CreateProfile extends Component {
         let date = this.props.appointment.getDate();
         let year = this.props.appointment.getFullYear();
         let stringDate = month + "/" + date + "/" + year;
+        //this.setState({user:{appointmentDate:stringDate}});
         let time = "9:00 am";
    const appObj = {
       date: stringDate,
@@ -119,15 +127,15 @@ class CreateProfile extends Component {
    // otherwise, return the transaction status
    return transactions[txHash].status;
  };
-
-
+	
   render() {
-    if(this.getTxStatus() == "success"){
+    if(this.getTxStatus() === "success"){
       this.props.history.push('/profile');
     }
     const {doctor} = this.props;
     //console.log(doctor);
     return (
+      this.state.reviewAppointments === false ?
       <div className="row register-user">
       <div className="col-sm-8">
         <div className="panel panel-primary" style={leftPanelStyle}>
@@ -207,7 +215,7 @@ class CreateProfile extends Component {
 
 
     <button type="submit" className="btn btn-primary" style={btnStyle}>Create Profile</button>
-    <button type="button" className="btn btn-default" style={lgnbtnStyle}>Login</button>
+    <button type="button" className="btn btn-default" style={lgnbtnStyle} onClick={this.onReview}>Login</button>
   </div>
  </form>
  </div>
@@ -224,14 +232,12 @@ class CreateProfile extends Component {
             <p><span className="glyphicon glyphicon-map-marker"></span> {doctor.address1}</p>
             <p>{doctor.address2}</p>
             <p><span className="glyphicon glyphicon-earphone"></span> {doctor.phone} </p>
-
-            <p>Reason for Visit:</p>
-
           </div>
       </div>
       </div>
       </div>
-
+      :<ReviewAppointment doctor={this.props.doctor} appointment={this.props.appointment}/>
+      
     );
   }
 }

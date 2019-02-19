@@ -19,6 +19,16 @@ Assuming <b>node</b> and <b>npm</b> are insalled in your machine. Requires <b>no
 <p>Open new terminal/cmd window and cd into <b>project_code_base</b> and run <b>truffle migrate</b>
 <p>Open new terminal/cmd window and cd into <b>project_code_base/ui</b> and run <b>npm install</b>
 <p>From <b>project_code_base/ui</b> run <b>npm start</b>, it will start the application at port <b>3000</b>
+  
+ # Troubleshotting:
+  <p>If you face any issues while building and running the project, please consider the following steps: </p>
+  <ul>
+  <li>disable the metamask plugin from chrome, if you are using one!</li>
+  <li>make sure truffle version is @4.1.15, you can force npm to install the particual version by doing: npm install truffle@4.1.15</li>
+  <li>'contacts' folder inside ui/src/ is a symbolic link refering to build/contracts directly inside the project_code_base, this link   can be broken/won't work based on your operating system, so you could manually copy all the files from build/contracts from project_code_base and paste it inside ur/src/contracts</li>
+
+
+  </ul>
 
 
 
