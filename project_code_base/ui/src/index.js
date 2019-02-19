@@ -11,8 +11,10 @@ import { Drizzle, generateStore } from "drizzle";
 import RegisterPatient from "./contracts/RegisterPatient.json";
 
 
+
+
 // let drizzle know what contracts we want
-const contracts = { contracts: [RegisterPatient] };
+const contracts = { contracts: [RegisterPatient]};
 
 // setup the drizzle store and drizzle
 const drizzleStore = generateStore(contracts);
@@ -22,7 +24,7 @@ console.log(drizzleStore);
 console.log(drizzle);
 
 ReactDOM.render(
-	
+
 	<BrowserRouter>
 		<App drizzle={drizzle}/>
 	</BrowserRouter>

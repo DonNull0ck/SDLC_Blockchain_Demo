@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Signup from './patient_form/Signup' 
+import Signup from './patient_form/Signup'
 import Appointments from './appointments/Appointments'
 import Profile from './profile/Profile'
 import Home from './home/home'
@@ -44,13 +44,13 @@ class App extends Component {
         });
   }
 
-  // once the component gets rendered intializeDrizzle 
+  // once the component gets rendered intializeDrizzle
   //componentDidMount() is one of the react life cycle methods
   // it gets called once the render is called
   componentDidMount(){
     this.intializeDrizzle();
-  } 
-  // once the component gets destroyed unsubscribe the drizzle state 
+  }
+  // once the component gets destroyed unsubscribe the drizzle state
   //compomentWillUnmount() is one of the react life cycle methods
   // it gets called once the dom is destroyed
     compomentWillUnmount() {
@@ -70,35 +70,39 @@ class App extends Component {
         <header className="App-header">
         <div className="container">
           <div className="page-header">
-            <h2>Welcome to SDLC Blockchain Demo</h2>      
+            <h2>Welcome to SDLC Blockchain Demo</h2>
           </div>
-        </div>  
+        </div>
             <Switch>
-             <Route exact={true} 
-              path="/" 
-              render={(props) => <Signup {...props} 
+             <Route exact={true}
+              path="/home"
+              render={(props) => <Signup {...props}
               drizzle={this.props.drizzle}
               drizzleState={this.state.drizzleState}/>}
              />
-             <Route 
-              path="/appointments" 
-              render={(props) => <Appointments {...props} 
+             <Route
+              path="/appointments"
+              render={(props) => <Appointments {...props}
               drizzle={this.props.drizzle}
               drizzleState={this.state.drizzleState}/>}
              />
-             <Route 
-              path="/profile" 
-              render={(props) => <Profile {...props} 
+             <Route
+              path="/profile"
+              render={(props) => <Profile {...props}
               drizzle={this.props.drizzle}
               drizzleState={this.state.drizzleState}/>}
-             />  
-            <Route 
-              path="/home" 
-              render={()=><Home/>}
              />
-            
+            <Route
+              exact={true}
+              path="/"
+              render={(props) => <Home {...props}
+              drizzle={this.props.drizzle}
+              drizzleState={this.state.drizzleState}/>}
+              />}
+             />
+
             </Switch>
-      
+
         </header>
       </div>
     );
