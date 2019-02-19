@@ -46,11 +46,11 @@ class Card extends Component {
     this.setState({requestApp:!this.state.requestApp});
     
   }
-  handleSubmit(event,data){
+  handleSubmit(event,doctor){
     event.preventDefault();
     this.setState({createProfile:true});
-    this.setState({doctor:data});
-    this.props.appointment(data);
+    this.setState({doctor:doctor});
+    this.props.handleAppointment(doctor, this.state.appointmentDate);
   }
 
 
@@ -67,7 +67,7 @@ class Card extends Component {
       {arr.map((item,index) => 
       <div className="row doctor-card" key={index}>
         <div className="col-sm-3">
-          <img src={logo} className="img-thumbnail" style={imgStyle}/>
+          <img src={logo} alt="doctor-img" className="img-thumbnail" style={imgStyle}/>
         </div>
       <div className="col-sm-6" >
         <h4>{item.name}</h4>
@@ -84,9 +84,9 @@ class Card extends Component {
         
         <button className="btn btn-primary" onClick={this.clickSearch}>{this.state.requestApp == false ? 'Request Appointment': 'Cancel'}</button>
       </div>
-      {this.state.requestApp == true ?
+      {this.state.requestApp === true ?
         <div className="col-sm-12">
-            <form method="POST">
+            <form method="POST" onSubmit={(event) => this.handleSubmit(event,item)}>
               <DatePicker
                 selected={this.state.appointmentDate}
                 onChange={this.handleDate}
@@ -95,7 +95,7 @@ class Card extends Component {
                 className="apt-selector"
                 required
               />
-            <button type="submit" className="btn btn-primary" style={btnStyle} onClick={(e) => this.handleSubmit(e,item)}>REQUEST APPOINTMENT</button>
+            <button type="submit" className="btn btn-primary" style={btnStyle}>REQUEST APPOINTMENT</button>
           </form>
         </div>
         :null}

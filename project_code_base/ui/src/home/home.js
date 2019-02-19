@@ -26,16 +26,19 @@ class Home extends Component {
   this.state = {
     searchClicked:false,
     appointmentRequested:false,
-    doctor: null
+    doctor: null,
+    appointment: null
   };
 
   this.handleSubmit = this.handleSubmit.bind(this);
-  this.handleAppStatus = this.handleAppStatus.bind(this);
+  this.handleAppointment = this.handleAppointment.bind(this);
   }
-handleAppStatus(doc){
+handleAppointment(doc,date){
   this.setState({appointmentRequested:true});
   this.setState({doctor:doc});
+  this.setState({appointment:date});
 }
+
 
 handleSubmit(event) {
     event.preventDefault();
@@ -51,28 +54,28 @@ handleSubmit(event) {
             <div className="user">
               <h4>APP NAME</h4>
               <span className="glyphicon glyphicon-user"></span>
-              <span className="txt"><a href="">Log in</a></span>
-              <span className="txt span-block"><a href="">Sign up</a></span>
+              <span className="txt"><a href="#/">Log in</a></span>
+              <span className="txt span-block"><a href="#/">Sign up</a></span>
             </div>
             <div className="appointments">
             <p>
               <span className="glyphicon glyphicon-home"></span>
-              <a href=""><span className="txt">MY</span>
+              <a href="#/"><span className="txt">MY</span>
               <span className="txt span-block">APPOINTMENTS</span></a>
             </p>
             <p>
               <span className="glyphicon glyphicon-user"></span>
-              <span className="txt"><a href="">PROFILE</a></span>
+              <span className="txt"><a href="#/">PROFILE</a></span>
             </p>
             <p>
               <span className="glyphicon glyphicon-calendar"></span>
-              <a href=""><span className="txt">SCHEDULE AN</span>
+              <a href="#/"><span className="txt">SCHEDULE AN</span>
               <span className="txt span-block">APPOINTMENT</span></a>
             </p>
             </div>
           </div>
           <div className="col-sm-10">
-            {this.state.appointmentRequested == false ?
+            {this.state.appointmentRequested === false ?
             <div className="">
               <p className="par">Search for Caregivers</p>
               <form className="form-inline" method="POST"  onSubmit={this.handleSubmit}>
@@ -87,17 +90,17 @@ handleSubmit(event) {
                 </div>
                 <button type="submit" className="btn btn-primary btn-md"> Search </button>
               </form>
-              {this.state.searchClicked == false ? 
+              {this.state.searchClicked === false ?
               <div className="searchResults">
                   <p className="par">Your results will appear here</p>
                   <p className="par">after you search </p>
               </div>
-            :<Card appointment={this.handleAppStatus}/>}
+            :<Card handleAppointment={this.handleAppointment}/>}
             </div>
-            :<CreateProfile doctor={this.state.doctor}/>}
+            :<CreateProfile doctor={this.state.doctor} appointment={this.state.appointment} history={this.props.history} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>}
           </div>
         </div>
-            
+
       </div>
 
     );
@@ -105,3 +108,4 @@ handleSubmit(event) {
 }
 
 export default Home;
+

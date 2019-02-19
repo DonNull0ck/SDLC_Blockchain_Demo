@@ -20,11 +20,11 @@ class ReviewAppointment extends Component {
 							</div>
 
 							<div className="col-sm-5">
-									<p>You have an appointment with Henry Richardson , MD.</p>
-									<p><span className="glyphicon glyphicon-calendar"></span> Friday, February 15</p>
+									<p>You have an appointment with Dr.{this.props.doctor.name}</p>
+									<p><span className="glyphicon glyphicon-calendar"></span> {this.props.appointment.getMonth() + 1}/{this.props.appointment.getDate()}/{this.props.appointment.getFullYear()}</p>
 									<p><span className="glyphicon glyphicon-time"></span> 9 am</p>
-									<p><span className="glyphicon glyphicon-map-marker"></span> Allegheny General Hospital</p>
-									<p><span className="glyphicon glyphicon-earphone"></span> 412.359.3445 </p>
+									<p><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.address1}</p>
+									<p><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.phone}</p>
 									<p>Reason for Visit</p>
 									<p>Headache</p>
 							</div>

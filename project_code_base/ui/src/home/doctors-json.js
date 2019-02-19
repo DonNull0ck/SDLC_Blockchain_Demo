@@ -8,7 +8,7 @@ const DoctorList =
       'name': 'Henry Richardson, MD',
       'type': 'Primary Care Physcian',
       'phone': '412-123-1234',
-      'address1': 'Allghney General Hospital',
+      'address1': 'Alleghney General Hospital',
       'address2': '490 E North Avenue, Suite 515',
       'zip': '15234',
       'practice': ['Nose', 'Ear', 'Throat'],

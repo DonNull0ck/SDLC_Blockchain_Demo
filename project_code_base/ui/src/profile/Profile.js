@@ -6,7 +6,6 @@ class Profile extends Component {
     state = {
       stackId:null,
       dataKey:null,
-      patientsKey:null,
       contractError:false
     };
 
@@ -19,25 +18,16 @@ class Profile extends Component {
     }
 
     const dataKey = contract.methods["getPatient"].cacheCall(
-          drizzleState.accounts[0],
          {
-          from: drizzleState.accounts[0], gas: 100000
+          from: drizzleState.accounts[0]
          });
 
 
     // save the `dataKey` to local component state for later reference
     this.setState({dataKey});
 
-    // get list of all patients
-      const patientsKey = contract.methods["getPatients"].cacheCall(
-          {
-            from: drizzleState.accounts[0], gas: 100000
-          }
-        );
-    this.setState({patientsKey});
-
   }
- 
+
 
   render() {
     if(this.state.contractError){
@@ -46,23 +36,34 @@ class Profile extends Component {
       );
     }
     // get the contract state from drizzleState
+      const driz = this.props.drizzle;
      const { RegisterPatient } = this.props.drizzleState.contracts;
-      //console.log(this.props.drizzleState.accounts);
+      
 
       // using the saved `dataKey`, get the variable we're interested in
-      const patientAccts = RegisterPatient.getPatient; // 
-      const listOfAccts = RegisterPatient.getPatients;
+      const patient = RegisterPatient.getPatient[this.state.dataKey]; //
+      let patientJSON = null;
+      let patientApp = null;
+      if(patient && patient.value){
+        patientJSON = patient.value[0];
+        patientApp = patient.value[1];
+      }
+      let patientObj = null;
+      if(patientJSON){
+        patientObj = JSON.parse(patientJSON);
+      }
 
-      const key = this.state.dataKey;
-      const patientAcct = patientAccts[key]; // retrieve particular one using the key
-      const accts = listOfAccts[this.state.patientsKey];
-      //const utils = this.props.drizzle.web3.utils;
-      //console.log(patientAcct);
-    if(!patientAcct){
+      //const key = this.state.dataKey;
+      //const patient = patientAcct[key]; // retrieve particular one using the key
+     // console.log(patient);
+      //const patientObj = patient.value[0];
+     // console.log(patientObj);
+    
+    if(!patient || !patient.value){
         return (
           <div className="container">
             <div className="jumbotron">
-              <p>You don't have any registered accounts yet!</p>
+              <p>Sign in or Register first!</p>
             </div>
           </div>
         );
@@ -70,39 +71,43 @@ class Profile extends Component {
     return (
       <div className="container">
         <h2>Profile</h2>
-        <div className="table-responsive">          
+        <div className="table-responsive">
           <table className="table">
             <thead>
               <tr>
                 <th>Full Name</th>
-                <th>Your ID</th>
+                <th>Email</th>
                 <th>SSN</th>
-                <th>Date Of Birth</th>
-                <th>Email Address</th>
+                <th>Phone</th>
+                <th>Date of Birth</th>
+                <th>Insurnace Group Number</th>
+                <th>Insurnace Provider</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{patientAcct && patientAcct.value[0]}</td>
-                <td>{patientAcct && patientAcct.value[1]}</td>
-                <td>{patientAcct && patientAcct.value[3]}</td>
-                <td>{patientAcct && patientAcct.value[4]}</td>
-               <td>{patientAcct && patientAcct.value[5]}</td>
+                <td>{patientObj.firstName} {patientObj.lastName}</td>
+                <td>{patientObj.email}</td>
+                <td>{patientObj.ssn}</td>
+                <td>{patientObj.phone}</td>
+                <td>{patientObj.dob}</td>
+                <td>{patientObj.insuranceGroupNumber}</td>
+                <td>{patientObj.insuranceProvider}</td>
               </tr>
             </tbody>
           </table>
-        </div>
-        <div className="container">
+          <div className="container">
             <h2>Your upcoming appointments</h2>
             <ul className="list-group">
-                {patientAcct.value[6].map(function(name, index){
-                    return <li className="list-group-item list-group-item-info" key={index}>{name}</li>;
+                {patientApp.map(function(name, index){
+                    return <li className="list-group-item list-group-item-info" key={index}>{driz.web3.utils.toAscii(name)}</li>;
                   })}
             
             </ul>
         </div>
+        </div>
+
       </div>
-      
     );
   }
 }
