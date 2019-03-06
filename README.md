@@ -6,7 +6,7 @@ Assuming <b>node</b> and <b>npm</b> are insalled in your machine. Requires <b>no
 
 <b>Installing truffle:</b> truffle-cli provides tool to compile,migrate,test, build the smart contracts.
 
-<b>npm install -g truffle</b>
+<b>npm install -g truffle@4.1.15</b>
 
 <b>Installing ganache-cli:</b> Ganache-cli is a personal blockchain for Ethereum development you can use to deploy contracts, develop applications, and run tests on.
 
