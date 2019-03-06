@@ -9,18 +9,19 @@ import * as serviceWorker from './serviceWorker';
 
 import { Drizzle, generateStore } from "drizzle";
 import RegisterPatient from "./contracts/RegisterPatient.json";
+import Doctors from "./contracts/Doctors.json";
 
 
 
 
 // let drizzle know what contracts we want
-const contracts = { contracts: [RegisterPatient]};
+const contracts = { contracts: [RegisterPatient,Doctors]};
 
 // setup the drizzle store and drizzle
 const drizzleStore = generateStore(contracts);
 const drizzle = new Drizzle(contracts, drizzleStore);
 
-console.log(drizzleStore);
+//console.log(drizzleStore);
 console.log(drizzle);
 
 ReactDOM.render(

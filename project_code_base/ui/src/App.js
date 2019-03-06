@@ -3,14 +3,14 @@ import Signup from './patient_form/Signup'
 import Appointments from './appointments/Appointments'
 import Profile from './profile/Profile'
 import Home from './home/home'
-import CreateProfile from './home/register'
+import Doctors from './profile/Doctor'
+import AddDoctor from './profile/AddDoctor'
 
 
 
 
-import  { Link, Route, Switch } from 'react-router-dom';
+import  { Route, Switch } from 'react-router-dom';
 
-import logo from './logo.svg';
 import './App.css';
 
 const progressbar = {
@@ -91,6 +91,20 @@ class App extends Component {
               render={(props) => <Profile {...props}
               drizzle={this.props.drizzle}
               drizzleState={this.state.drizzleState}/>}
+             />
+             <Route
+              path="/doctors"
+              render={(props) => <Doctors {...props}
+              drizzle={this.props.drizzle}
+              drizzleState={this.state.drizzleState}/>}
+              />}
+             />
+             <Route
+              path="/add-doctor"
+              render={(props) => <AddDoctor {...props}
+              drizzle={this.props.drizzle}
+              drizzleState={this.state.drizzleState}/>}
+              />}
              />
             <Route
               exact={true}
