@@ -36,7 +36,7 @@ class Signup extends Component {
     console.log('A form is submitted: ' + event);
     event.preventDefault();
     const { drizzle, drizzleState } = this.props;
-    
+
     // let drizzle know we want to call the `setPatient` method with `value`
     const contract = drizzle.contracts.RegisterPatient;
 
@@ -44,7 +44,6 @@ class Signup extends Component {
         this.setState({contractError:true});
         return;
     }
-
     const stackId = contract.methods["setPatient"].cacheSend(
           drizzleState.accounts[0],
           this.state.PatientName,
@@ -57,7 +56,7 @@ class Signup extends Component {
           from: drizzleState.accounts[0], gas: 500000});
         // save the `stackId` for later reference
         this.setState({ stackId });
-      
+
   }
 
   // get transaction status
@@ -96,6 +95,16 @@ class Signup extends Component {
     if(this.getTxStatus() == "success"){
       this.props.history.push('/appointments');
     }
+    if(this.getTxStatus() == "error"){
+      const web3 = this.props.drizzle.web3
+      var event = this.props.drizzle.contracts.RegisterPatient.events.ErrorMessage();
+      event.subscribe(function(error,result){
+        if(!error){
+          console.log(result);
+        }
+        console.log(error);
+      });
+    }
     return (
       <div className="container singup-form-container">
         <h2>Signup Here</h2>
@@ -103,52 +112,52 @@ class Signup extends Component {
           <p  className="errorMessage">{this.state.stackId != null? <span>Transaction Status:{this.getTxStatus()}</span>:null}</p>
       <form  method="POST" name="SignupForm" onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <input 
-          type="text" 
-          value={this.state.PatientName} 
-          onChange={this.handleInputChange} 
-          className="form-control" id="PatientName" 
+          <input
+          type="text"
+          value={this.state.PatientName}
+          onChange={this.handleInputChange}
+          className="form-control" id="PatientName"
           placeholder="Enter Name" name="PatientName" required/>
         </div>
          <div className="form-group">
-          <input type="text" 
-          value={this.state.Patient_ID} 
-          onChange={this.handleInputChange} 
-          className="form-control" id="Patient_ID" 
+          <input type="text"
+          value={this.state.Patient_ID}
+          onChange={this.handleInputChange}
+          className="form-control" id="Patient_ID"
           placeholder="Enter ID" name="Patient_ID" required/>
         </div>
         <div className="form-group">
-          <input type="text" 
-          value={this.state.PatientForm_ID} 
-          onChange={this.handleInputChange} 
-          className="form-control" id="PatientForm_ID" 
+          <input type="text"
+          value={this.state.PatientForm_ID}
+          onChange={this.handleInputChange}
+          className="form-control" id="PatientForm_ID"
           placeholder="Enter Form ID" name="PatientForm_ID" required/>
         </div>
         <div className="form-group">
-          <input type="text" 
-          value={this.state.SSN} 
-          onChange={this.handleInputChange} 
-          className="form-control" id="SSN" 
+          <input type="text"
+          value={this.state.SSN}
+          onChange={this.handleInputChange}
+          className="form-control" id="SSN"
           placeholder="Enter ssn" name="SSN" required/>
         </div>
         <div className="form-group">
-          <input type="date" 
-          value={this.state.DateOfBirth} 
-          onChange={this.handleInputChange} 
-          className="form-control" id="DateOfBirth" 
+          <input type="date"
+          value={this.state.DateOfBirth}
+          onChange={this.handleInputChange}
+          className="form-control" id="DateOfBirth"
           placeholder="Enter Date of Birth" name="DateOfBirth" required/>
         </div>
         <div className="form-group">
-          <input type="email" 
-          value={this.state.EmailAddress} 
-          onChange={this.handleInputChange} 
-          className="form-control" id="EmailAddress" 
+          <input type="email"
+          value={this.state.EmailAddress}
+          onChange={this.handleInputChange}
+          className="form-control" id="EmailAddress"
           placeholder="Enter email" name="EmailAddress" required/>
         </div>
       <button type="submit"  className="btn btn-lg btn-primary">Submit</button>
       </form>
       </div>
-      
+
     );
   }
 }

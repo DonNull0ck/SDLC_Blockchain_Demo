@@ -27,7 +27,8 @@ class Card extends Component {
       requestApp:false,
       doctor: null,
       createProfile:false,
-      appointmentDate: null
+      appointmentDate: null,
+      clickedIndex: null
     };
 
   this.clickSearch = this.clickSearch.bind(this);
@@ -41,9 +42,14 @@ class Card extends Component {
     });
   }
   //requestApp = false;
-  clickSearch(event){
+  clickSearch(event,index){
     event.preventDefault();
     this.setState({requestApp:!this.state.requestApp});
+    if(this.state.clickedIndex === index){
+      this.setState({clickedIndex: null});
+      return;
+    }
+    this.setState({clickedIndex: index});
     
   }
   handleSubmit(event,doctor){
@@ -82,9 +88,9 @@ class Card extends Component {
           <p className="par" key={idx}>{itm}</p>
         )}
         
-        <button className="btn btn-primary" onClick={this.clickSearch}>{this.state.requestApp == false ? 'Request Appointment': 'Cancel'}</button>
+        <button className="btn btn-primary" onClick={(event) => this.clickSearch(event,index)}>{this.state.clickedIndex !== index ? 'Request Appointment': 'Cancel'}</button>
       </div>
-      {this.state.requestApp === true ?
+      {this.state.clickedIndex === index ?
         <div className="col-sm-12">
             <form method="POST" onSubmit={(event) => this.handleSubmit(event,item)}>
               <DatePicker

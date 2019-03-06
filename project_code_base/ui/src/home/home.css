@@ -92,3 +92,15 @@
 	text-align: center;
 	margin-right: 40px;
 }
+
+.practice-areas{
+	padding:5px;
+	border:1px solid green;
+	border-radius: 15px;
+}
+.practice-areas-cancel{
+	margin-left: 480px;
+	font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
