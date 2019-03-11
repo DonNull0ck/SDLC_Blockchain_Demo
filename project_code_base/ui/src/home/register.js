@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
+import { Link } from 'react-router-dom';
+
 
 import ReviewAppointment from './review';
 
@@ -88,24 +89,24 @@ class CreateProfile extends Component {
      insuranceProvider: this.state.user.insuranceProvider,
      insuranceGroupNumber: this.state.user.insuranceGroupNumber
    };
-        let month = this.props.appointment.getMonth() + 1;
-        let date = this.props.appointment.getDate();
-        let year = this.props.appointment.getFullYear();
-        let stringDate = month + "/" + date + "/" + year;
-        //this.setState({user:{appointmentDate:stringDate}});
-        let time = "9:00 am";
-   const appObj = {
-      date: stringDate,
-      time: time
-   };
+  //      let month = this.props.appointment.getMonth() + 1;
+  //       let date = this.props.appointment.getDate();
+  //       let year = this.props.appointment.getFullYear();
+  //       let stringDate = month + "/" + date + "/" + year;
+  //       //this.setState({user:{appointmentDate:stringDate}});
+  //       let time = "9:00 am";
+  //  const appObj = {
+  //     date: stringDate,
+  //     time: time
+  //  };
 
-  let appStringDate = JSON.stringify(appObj);
+  // let appStringDate = JSON.stringify(appObj);
  // console.log(JSON.stringify(userObj));
   //console.log(appStringDate);
-  console.log(drizzle.web3.utils.fromAscii(stringDate));
+  //console.log(drizzle.web3.utils.fromAscii(stringDate));
    const stackId = contract.methods["setPatient"].cacheSend(
          JSON.stringify(userObj),
-         drizzle.web3.utils.fromAscii(stringDate),
+        // drizzle.web3.utils.fromAscii(stringDate),
         {
          from: drizzleState.accounts[0], gas: 500000});
        // save the `stackId` for later reference
@@ -129,19 +130,22 @@ class CreateProfile extends Component {
  };
 	
   render() {
+    if(this.props.authProps.isAuthenticated){
+      return(
+        <p className="par-default">Would you like to logout first?<Link to="/"><span onClick={() => this.props.authProps.handleAuthentication(false)}>Click Here!</span> </Link></p>
+      );
+    }
     if(this.getTxStatus() === "success"){
       this.props.history.push('/profile');
     }
-    const {doctor} = this.props;
     //console.log(doctor);
     return (
-      this.state.reviewAppointments === false ?
       <div className="row register-user">
-      <div className="col-sm-8">
+      <div className="col-sm-12">
         <div className="panel panel-primary" style={leftPanelStyle}>
-        <div className="panel-heading">Create Profile</div>
+        <div className="panel-heading">Create Profile or Login Below</div>
       <div className="panel-body">
-      <p className="errorMessage">{this.state.contractError == true ? <span>Internal Error, Please try again later!</span>:null}</p>
+      <p className="errorMessage">{this.state.contractError === true ? <span>Internal Error, Please try again later!</span>:null}</p>
       <p  className="errorMessage">{this.state.stackId != null? <span>Transaction Status:{this.getTxStatus()}</span>:null}</p>
   <form method="POST" name="SignupForm" onSubmit={this.handleSubmit}>
    <div className="row">
@@ -215,13 +219,15 @@ class CreateProfile extends Component {
 
 
     <button type="submit" className="btn btn-primary" style={btnStyle}>Create Profile</button>
-    <button type="button" className="btn btn-default" style={lgnbtnStyle} onClick={this.onReview}>Login</button>
+    <Link to="/login">
+      <button type="button" className="btn btn-default" style={lgnbtnStyle}>Login</button>
+    </Link>
   </div>
  </form>
  </div>
 </div>
-      </div>
-      <div className="col-sm-4">
+</div>
+      {/* <div className="col-sm-4">
       <div className="panel panel-primary" style={panelStyle}>
           <div className="panel-heading"> Your Appointment</div>
           <div className="panel-body">
@@ -234,9 +240,9 @@ class CreateProfile extends Component {
             <p><span className="glyphicon glyphicon-earphone"></span> {doctor.phone} </p>
           </div>
       </div>
+      </div> */}
       </div>
-      </div>
-      :<ReviewAppointment doctor={this.props.doctor} appointment={this.props.appointment}/>
+     // :<ReviewAppointment doctor={this.props.doctor} appointment={this.props.appointment}/>
       
     );
   }

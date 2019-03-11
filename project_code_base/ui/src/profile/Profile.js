@@ -1,38 +1,37 @@
 import React, { Component } from 'react';
 import './Profile.css';
+import { Link } from 'react-router-dom';
+
 
 class Profile extends Component {
-
-    state = {
+  constructor (props) {
+    super(props);
+    this.state = {
       stackId:null,
       dataKey:null,
-      contractError:false
+      contractError:false,
+      profileAdded: false
     };
-
-  componentDidMount(){
-    const {drizzle,drizzleState} = this.props;
-    const contract = drizzle.contracts.RegisterPatient;
-    if(!contract){
-      this.setState({contractError:true});
-      return;
-    }
-
-    const dataKey = contract.methods["getPatient"].cacheCall(
-         {
-          from: drizzleState.accounts[0]
-         });
-
-
-    // save the `dataKey` to local component state for later reference
-    this.setState({dataKey});
-
   }
 
+  componentDidMount(){
+    //const {drizzle,drizzleState} = this.props;
+    const authenticated = this.props.authProps.isAuthenticated;
+    if(authenticated){
+      const dataKey = this.props.authProps.accountRetrievedKey;
+      this.setState({dataKey});
+    }
+   
 
+    // save the `dataKey` to local component state for later reference
+    //this.setState({dataKey});
+
+  };
+  
   render() {
-    if(this.state.contractError){
+    if(this.state.dataKey === null){
       return (
-        <p className="errorMessage"><span>Internal Error, Please try again later!</span></p>
+        <p className="errorMessage"><span>Please login <Link to="/login">here!</Link></span></p>
       );
     }
     // get the contract state from drizzleState
@@ -47,10 +46,15 @@ class Profile extends Component {
       if(patient && patient.value){
         patientJSON = patient.value[0];
         patientApp = patient.value[1];
+       // patientApp = driz.web3.utils.toAscii(patientApp);
       }
       let patientObj = null;
       if(patientJSON){
         patientObj = JSON.parse(patientJSON);
+        if(!this.state.profileAdded){
+          this.setState({profileAdded:true});
+          this.props.authProps.handleAccount(patientObj);
+        }
       }
 
       //const key = this.state.dataKey;
@@ -63,13 +67,13 @@ class Profile extends Component {
         return (
           <div className="container">
             <div className="jumbotron">
-              <p>Sign in or Register first!</p>
+              <p>Please login first <Link to="/login">here!</Link></p>
             </div>
           </div>
         );
       }
     return (
-      <div className="container">
+      <div className="profile-container">
         <h2>Profile</h2>
         <div className="table-responsive">
           <table className="table">

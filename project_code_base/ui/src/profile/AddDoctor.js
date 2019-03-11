@@ -86,19 +86,14 @@ handleSubmit(event) {
         phone: this.state.doctor.phone,
         address1: this.state.doctor.address1,
         address2: this.state.doctor.address2,
-        zip: this.state.doctor.zip,
-        practiceAreas: drizzle.web3.utils.fromAscii(practiceAreasJSON)
+        zip: this.state.doctor.zip
+      //  practiceAreas: drizzle.web3.utils.fromAscii(practiceAreasJSON)
   };
   const stackId = contract.methods["addDoctor"].cacheSend(
-            this.state.doctor.name,
-            this.state.doctor.type,
-            this.state.doctor.phone,
-            this.state.doctor.address1,
-            this.state.doctor.address2,
-            this.state.doctor.zip,
+            JSON.stringify(docObj),
             drizzle.web3.utils.fromAscii(practiceAreasJSON),
         {
-            from: drizzleState.accounts[0], gas: 500000});
+            from: drizzleState.accounts[0], gas: 900000});
             // save the `stackId` for later reference
             this.setState({ stackId });
 }   

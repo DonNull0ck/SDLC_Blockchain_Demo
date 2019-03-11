@@ -1,46 +1,66 @@
 pragma solidity >=0.4.0 <0.6.0;
+import "./Doctor.sol";
 
-contract RegisterPatient {
+
+contract RegisterPatient is Doctors {
   struct Patient {
+        uint id;
         string userInfo;
+    }
+    struct Appointment {
+        uint id;
         bytes32[] appointments;
-        bool created;
     }
 
-    mapping (address => Patient) patients;
-    address[] public patientAccts;
+    mapping (uint => Patient) patients;
+    mapping (uint => Appointment) appointments;
+    uint public patientCounts;
+    uint[] public patientAccts;
+    event AccountNotFound(
+      uint indexed _patientId
+    );
 
     //method to create new patient
-    function setPatient(string _user, bytes32 _appointments) public {
-        //check if patient already exists
-        require(patients[msg.sender].created == false, "account already exist!");
+    function setPatient(string _user) public {
+        patientCounts++;
+      //  require(patients[msg.sender].created == false, "account already exist!");
 
-
-        Patient storage patient = patients[msg.sender];
+        Patient storage patient = patients[patientCounts];
 
         patient.userInfo = _user;
-        patient.appointments.push(_appointments);
-        patient.created = true;
-        patientAccts.push(msg.sender) -1;
+     //   patient.appointments.push(_appointments);
+        patientAccts.push(patientCounts) -1;
     }
 
 //once the user is logged in call this method to set the appointment
-    function setAppointment(bytes32 _appointment) public {
-        Patient storage patient = patients[msg.sender];
-        patient.appointments.push(_appointment);
+    function setAppointment(uint _id, string _appointment) public {
+        Appointment storage appointment = appointments[_id];
+        bytes32 _appBytes32 = string2Bytes32(_appointment);
+        appointment.appointments.push(_appBytes32) -1;
     }
 
 
-    function getPatients() public  view returns(address[]) {
+    function getPatients() public  view returns(uint[]) {
         return patientAccts;
     }
 
-    function getPatient() public view returns (string,bytes32[]) {
-        return (patients[msg.sender].userInfo, patients[msg.sender].appointments);
+    function getPatient(uint _id) public view returns (string,bytes32[]) {
+        return (patients[_id].userInfo, appointments[_id].appointments);
     }
 
     function countPatients() public view returns (uint) {
         return patientAccts.length;
+    }
+
+    function string2Bytes32(string memory _source) private returns (bytes32 result) {
+          bytes memory tempEmptyStringTest = bytes(_source);
+          if (tempEmptyStringTest.length == 0) {
+              return 0x0;
+            }
+
+            assembly {
+              result := mload(add(_source, 32))
+            }
     }
 
 }
