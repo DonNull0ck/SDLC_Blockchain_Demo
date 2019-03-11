@@ -1,5 +1,5 @@
 # SDLC_Blockchain_Demo
-A prototype blockchain developed internally by SDLC Partners L.P
+A prototype decentralized application (dApp) utilizing Blockchain developed internally by SDLC Partners L.P
 
 # Codebase initial setup 
 Assuming <b>node</b> and <b>npm</b> are insalled in your machine. Requires <b>node.js v8</b> or higher.
