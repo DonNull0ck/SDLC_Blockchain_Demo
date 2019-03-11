@@ -28,3 +28,7 @@
     transform: rotate(360deg);
   }
 }
+
+.par-default {
+  color:#1a6fb9;
+}
