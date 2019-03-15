@@ -61,6 +61,7 @@ class App extends Component {
         this.unsubscribe = drizzle.store.subscribe(() => {
             // every time the store updates, grab the state from drizzle
             const drizzleState = drizzle.store.getState();
+           // console.log(drizzleState);
 
             // check to see if it's ready, if so, update local component state
             if (drizzleState.drizzleStatus.initialized) {

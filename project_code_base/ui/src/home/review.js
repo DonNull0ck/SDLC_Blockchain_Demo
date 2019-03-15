@@ -16,11 +16,11 @@ class ReviewAppointment extends Component {
 	}
 
 	handleSubmit(event){
-		let date = this.props.doctor.appointment.date;
+		let date = this.props.doctor.appointment.toLocaleDateString();
         // let date = this.props.doctor.appointment.getDate();
         // let year = this.props.doctor.appointment.getFullYear();
         // let stringDate = month + "/" + date + "/" + year;
-    let time = this.props.doctor.appointment.time;
+    let time = this.props.doctor.appointment.toLocaleTimeString();
    	let appObj = {
       		date: date,
       		time: time
@@ -30,6 +30,9 @@ class ReviewAppointment extends Component {
 		//let appStringDate = JSON.stringify(appObj);
 		const contract = drizzle.contracts.RegisterPatient;
 		const userId = this.props.authProps.userId;
+
+	//	let gasEst =  contract.web3.eth.estimateGas();
+	//	console.log("gas required: " + gasEst);
 
 		const stackId = contract.methods["setAppointment"].cacheSend(
 		   userId,
@@ -77,8 +80,8 @@ class ReviewAppointment extends Component {
 
 							<div className="col-sm-5">
 									<p>You have an appointment with {this.props.doctor.doctor.docName}</p>
-									<p><span className="glyphicon glyphicon-calendar"></span> {this.props.doctor.appointment.date}</p>
-									<p><span className="glyphicon glyphicon-time"></span> {this.props.doctor.appointment.time}</p>
+									<p><span className="glyphicon glyphicon-calendar"></span> {this.props.doctor.appointment.toLocaleDateString()}</p>
+									<p><span className="glyphicon glyphicon-time"></span> {this.props.doctor.appointment.toLocaleTimeString()}</p>
 									<p><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.doctor.address1}</p>
 									<p><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.doctor.phone}</p>
 									<p>Reason for Visit</p>

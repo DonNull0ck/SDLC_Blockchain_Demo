@@ -12,7 +12,7 @@ contract Doctors {
         // string address2;
         // string zip;
         bytes32[] practiceAreas;
-      //  bytes32[] dates;
+        bytes32[] appointments;
     }
     struct Date {
         uint id;
@@ -31,7 +31,8 @@ contract Doctors {
     uint[] public doctorsList;
     uint public doctorsCount;
     Date private date;
-    Time[] private _times;
+
+    //Time[] private _times;
     event doctorAdded(
       uint indexed _doctorId
     );
@@ -69,13 +70,21 @@ contract Doctors {
         //doctors[doctorsCount] = Doctor(doctorsCount,_doctor, _doctype, _phone, _address1, _address2, _zip);
         //addDate(doctorsCount);
     }
+    string[] appTimes;
     function addDate(uint _id, string _date) public {
       require(doctors[_id].id == _id, "doctor doesnt exist for that id!");
-      Date storage date = dates[_id];
-      bytes32 _dateBytes32 =  stringToBytes32(_date);
-      date.dates.push(_dateBytes32);
-      string memory _timeStringObj = "[{\"time\":\"9:00 AM\",\"free\":\"true\"},{\"time\":\"10:00 AM\",\"free\":\"true\"},{\"time\":\"11:00 AM\",\"free\":\"true\"},{\"time\":\"12:00 PM\",\"free\":\"true\"},{\"time\":\"1:00 PM\",\"free\":\"true\"}]";
-      addTime(_id,_date,_timeStringObj);
+      Doctor storage doctor = doctors[_id];
+      appTimes = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM"];
+      for(uint i=0; i < appTimes.length; i++){
+              string memory _dateTimeBuilder = string(abi.encodePacked(" "));
+              _dateTimeBuilder = string(abi.encodePacked(_date," ",appTimes[i]));
+              bytes32 _dateBytes32 =  stringToBytes32(_dateTimeBuilder);
+              doctor.appointments.push(_dateBytes32) -1;
+      }
+
+      //date.dates.push(_dateBytes32);
+      //string memory _timeStringObj = "";
+      //addTime(_id,_date,_timeStringObj);
       //  date = Date(_date,_time);
        //doctor.dates.push(date) -1;
     }
@@ -89,11 +98,11 @@ contract Doctors {
       return doctorsList;
     }
 
-    function getDoctor(uint _id) public view returns (string,bytes32[],bytes32[],bytes32[]) {
+    function getDoctor(uint _id) public view returns (string,bytes32[],bytes32[]) {
         Doctor memory doctor = doctors[_id];
         Date memory _dates = dates[_id];
         Time memory _times = times[_id];
-        return (doctor.doctorObj,doctor.practiceAreas, _dates.dates,_times.times);
+        return (doctor.doctorObj,doctor.practiceAreas,doctor.appointments);
     }
 
     function stringToBytes32(string memory _source) returns (bytes32 result) {
