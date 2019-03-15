@@ -37,6 +37,7 @@ contract RegisterPatient is Doctors {
         Appointment storage appointment = appointments[_id];
         bytes32 _appBytes32 = string2Bytes32(_appointment);
         appointment.appointments.push(_appBytes32) -1;
+        
     }
 
 

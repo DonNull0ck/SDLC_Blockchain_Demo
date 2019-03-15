@@ -89,11 +89,14 @@ handleSubmit(event) {
         zip: this.state.doctor.zip
       //  practiceAreas: drizzle.web3.utils.fromAscii(practiceAreasJSON)
   };
+  //let gasEst =  contract.web3.eth.estimateGas();
+  // console.log("gas required: " + gasEst);
+
   const stackId = contract.methods["addDoctor"].cacheSend(
             JSON.stringify(docObj),
             drizzle.web3.utils.fromAscii(practiceAreasJSON),
         {
-            from: drizzleState.accounts[0], gas: 900000});
+            from: drizzleState.accounts[0], gas: 2000000});
             // save the `stackId` for later reference
             this.setState({ stackId });
 }   
