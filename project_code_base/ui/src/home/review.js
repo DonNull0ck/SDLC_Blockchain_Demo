@@ -20,7 +20,8 @@ class ReviewAppointment extends Component {
         // let date = this.props.doctor.appointment.getDate();
         // let year = this.props.doctor.appointment.getFullYear();
         // let stringDate = month + "/" + date + "/" + year;
-    let time = this.props.doctor.appointment.toLocaleTimeString();
+		let time = this.props.doctor.appointment.toLocaleTimeString();
+	
    	let appObj = {
       		date: date,
       		time: time
@@ -36,7 +37,8 @@ class ReviewAppointment extends Component {
 
 		const stackId = contract.methods["setAppointment"].cacheSend(
 		   userId,
-		   JSON.stringify(appObj),
+			 JSON.stringify(appObj),
+			 this.props.doctor.docId,
 		   {
 			from: drizzleState.accounts[0], gas: 500000});
 		//  save the `stackId` for later reference
