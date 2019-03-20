@@ -1,13 +1,15 @@
 .hero-container {
 	color:white;
 	justify-content: left;
-    text-align: left;
+	text-align: left;
+	width: 1886px;
 }
 .hero-container .glyphicon{
-	font-size: 12px;
+	font-size: 14px;
+	padding:5px;
 }
 .hero-container .txt{
-	font-size: 10px;
+	font-size: 18px;
 	padding-left:5px;
 }
 .hero-container .user{
@@ -38,8 +40,14 @@
 }
 
 .par {
-	font-size: 14px;
-	color:black;
+	font-size: 18px;
+	line-height: 1.63;
+	color:#4a4a4a;
+}
+
+.search-title{
+	margin-top: 10px;
+	padding:5px;
 }
 .form-padding-left{
 	padding-left:15px;
@@ -47,32 +55,48 @@
 .form-padding-right{
 	padding-right:15px;
 }
+
+.form-control{
+	height:48px;
+	font-size:16px;
+}
 .searchResults{
 	padding:145px;
 	text-align: center;
 	background-color: #fff;
 	box-shadow: -1px 0px 1px 0px #0000004f;
 	margin-top:25px;
+	margin-right:20px
 
 }
 .doctor-card{
 	color: black;
-	padding-bottom: 30px;
-    padding-top: 10px;
-    border-bottom: 1px solid #96a0a5e3;
+	padding:30px;
+	border-bottom: 1px solid #96a0a5e3;
 }
 .doctor-card .apt-selector{
 	width: 400px;
 	margin-top: 15px;
 	margin-bottom:20px;
 }
+
+.doctor-card h4{
+	font-size:24px;
+	font-weight: bold;
+}
+
+.doctor-card h5{
+	font-size:16px;
+	font-weight: bold;
+}
 .panel .panel-body{
 	text-align: left;
 	font-size: 12px;
 }
 .panel-body label{
-	font-size: 12px !important;
+	font-size: 18px !important;
 	font-weight: normal !important;
+	line-height: 1.44
 }
 .register-user{
 	color: black;
@@ -86,12 +110,20 @@
 
 .review-appointments ul li button{
 	width: 200px;
+	height: 48px;
+	font-size:16px;
 }
 .review-dashboard{
 	margin-top: 50px;
 	text-align: center;
 	margin-right: 40px;
 }
+
+.review-dashboard img{
+	height: 146px;
+	height: 146px;
+}
+
 
 .practice-areas{
 	padding:5px;

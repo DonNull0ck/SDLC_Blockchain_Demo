@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
+import docImg from '../DoctorImage.png'
 
 
 class ReviewAppointment extends Component {
@@ -16,17 +17,17 @@ class ReviewAppointment extends Component {
 						<div className="panel-heading">REVIEW YOUR APPOINTMENT</div>
 						<div className="panel-body">
 							<div className="col-sm-3">
-								<img src={logo} className="img-thumbnail" alt="DoctorPhoto" />
+								<img src={docImg} className="img-thumbnail" alt="DoctorPhoto" />
 							</div>
 
 							<div className="col-sm-5">
-									<p>You have an appointment with Dr.{this.props.doctor.name}</p>
-									<p><span className="glyphicon glyphicon-calendar"></span> {this.props.appointment.getMonth() + 1}/{this.props.appointment.getDate()}/{this.props.appointment.getFullYear()}</p>
-									<p><span className="glyphicon glyphicon-time"></span> 9 am</p>
-									<p><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.address1}</p>
-									<p><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.phone}</p>
-									<p>Reason for Visit</p>
-									<p>Headache</p>
+									<p className="par">You have an appointment with <b>Dr.{this.props.doctor.name}</b></p>
+									<p className="par"><span className="glyphicon glyphicon-calendar"></span> {this.props.appointment.getMonth() + 1}/{this.props.appointment.getDate()}/{this.props.appointment.getFullYear()}</p>
+									<p className="par"><span className="glyphicon glyphicon-time"></span> 9 am</p>
+									<p className="par"><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.address1}</p>
+									<p className="par"><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.phone}</p>
+									<p className="par">Reason for Visit</p>
+									<p className="par">Headache</p>
 							</div>
 
 							<div className = "col-sm-4 review-appointments">
