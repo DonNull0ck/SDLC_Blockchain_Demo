@@ -1,0 +1,10 @@
+Current way to run (will revise)
+
+Open terminal at this path
+Execute "source Ganache.sh"
+
+Open 2nd terminal at this path
+Execute "source StepTruffle.sh"
+
+Open 3rd terminal at this path
+Execute "source StepNPM.sh"
