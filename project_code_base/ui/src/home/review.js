@@ -30,6 +30,8 @@ class ReviewAppointment extends Component {
 
 		//let appStringDate = JSON.stringify(appObj);
 		const contract = drizzle.contracts.RegisterPatient;
+		const doctorAddress = drizzle.contracts.Doctors.address;
+		//console.log("doc address: " + doctorAddress);
 		const userId = this.props.authProps.userId;
 
 	//	let gasEst =  contract.web3.eth.estimateGas();
@@ -39,8 +41,10 @@ class ReviewAppointment extends Component {
 		   userId,
 			 JSON.stringify(appObj),
 			 this.props.doctor.docId,
+			 this.props.doctor.appIndex,
+			 doctorAddress,
 		   {
-			from: drizzleState.accounts[0], gas: 500000});
+			from: drizzleState.accounts[0], gas: 2000000});
 		//  save the `stackId` for later reference
 		 this.setState({ stackId }); 
 	}

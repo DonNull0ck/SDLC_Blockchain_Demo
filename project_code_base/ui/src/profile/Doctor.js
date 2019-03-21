@@ -30,6 +30,7 @@ class Doctors extends Component {
       requestApp:false,
       doctor: null,
       docId:null,
+      appIndex:null,
       createProfile:false,
       appointmentDate: null,
       appointmentTime:null,
@@ -66,9 +67,6 @@ class Doctors extends Component {
            });
         // save the `dataKey` to local component state for later reference
         this.setState({dataKey});
-       // const doctors = contract.methods.doctors; //
-        //this.setState({doctors});
-        //const doctorKeys = [];
         const state = this.state;
         contract.methods.getAllDoctors().call().then(function(res){
                 state.doctorKeys.push(res);
@@ -77,9 +75,6 @@ class Doctors extends Component {
                     let doctor = contract.methods.getDoctor(keys[i]).call();
                     doctor.then(function(res){
                         state.doctorsList.push(res);
-                        //let doctorPractice = drizzle.web3.utils.toAscii(res[6][0]);
-                       // let obj = JSON.parse(doctorPractice);
-                        //state.docPractice.push(res[1][0]);
                     })
                 }
         });
@@ -94,30 +89,19 @@ class Doctors extends Component {
         });
        
     }
-  toggleDateTime(event,_date,docId){
+  toggleDateTime(event,_date,docId,appIndex){
       //event.preventDefault();
       this.setState({ appointmentDate: new Date(_date)});
       this.setState({dateNotSelected:false});
+      this.setState({appIndex:appIndex});
       this.setState({docId});
       var DateEls = document.getElementsByClassName("date");
        for(let i=0; i<DateEls.length; i++){
          DateEls[i].classList.remove('label', 'label-success', 'dateSelected');
        }
-      // var allToggleList = document.getElementsByClassName("dateToggle");     
-      // for(let i=0; i<allToggleList.length; i++){
-      //   allToggleList[i].classList.remove('in', 'active');
-      //   allToggleList[i].style.display = "none";
-      // }
-
        var clickedEl = event.target;
        
        clickedEl.classList.add('label','label-success', 'dateSelected');
-      
-     // allToggleList.classList.remove('fade', 'in', 'active');
-      // var timeList = document.getElementById("dataToggle"+id);
-      // timeList.style.display = "block";
-      // timeList.classList.add('fade', 'in', 'active');
-     // console.log(timeList);
   }
   handleTime(event,time) {
     event.preventDefault();
@@ -151,10 +135,11 @@ class Doctors extends Component {
         return;
     }
     this.setState({dateNotSelected:false});
-    //this.setState({createProfile:true});
-    //this.setState({doctor:doctor});
+   
+    let _appIndex = this.state.appIndex.toString();
+    
     const dateObj = this.state.appointmentDate;
-    this.props.doctor.handleDoctor(doctor,dateObj,this.state.docId);
+    this.props.doctor.handleDoctor(doctor,dateObj,this.state.docId,_appIndex);
     this.props.history.push('/review-appointment');  
   }
 
@@ -181,9 +166,6 @@ class Doctors extends Component {
      const docPracticeJSON = [];
      const dates32bytes = [];
      const datesJSON = [];
-    // const timesJSON = [];
-     //const timeObj = [];
-
 
      if(this.state.doctorsList.length === 0){
         return (
@@ -197,17 +179,16 @@ class Doctors extends Component {
           docListJSON.push(val["0"]);
           let practiceBytes32 = val["1"][0];
           let bytesToJSONstring = driz.web3.utils.toAscii(practiceBytes32);
+          //let practiceObj = JSON.parse(bytesToJSONstring);
+          //console.log(practiceObj);
           docPracticeJSON.push(bytesToJSONstring);
           let dateObj = {
                   "id": state.doctorKeys[0][index],
                   "times": val[2]
           };
           dates32bytes.push(dateObj);
-          //let datesJSONstring = driz.web3.utils.toAscii(dates32bytes);
-          //datesJSON.push(datesJSONstring);
-          //timesJSON.push(val["3"]);
-          //timeObj.push(driz.web3.utils.toAscii(val["3"]));
         });
+        console.log(docPracticeJSON);
       }
       if(docListJSON.length){
         docListJSON.forEach(function(val,index){
@@ -218,51 +199,13 @@ class Doctors extends Component {
         });
       // console.log(dates32bytes);
         dates32bytes.forEach(function(value,index){
-         // value.forEach(function(val,key){
-            // let dateJSONobj ={
-            //     "id": value.id,
-            //     "time": value.times
-            // };
             let dates = [value.times];
-          //  let dates32bytes = val;
-            //let datesJSONstring = driz.web3.utils.toAscii(dates32bytes);
-            //console.log(datesJSONstring);
             datesJSON.push(dates);
         //  });
           
-         console.log(datesJSON);
+        //console.log(docPracticeJSON);
           
         });
-     //  console.log(datesJSON);
-        // timesJSON.forEach(function(val,index){
-        //   let _time = [];
-        //   val.forEach(function(itm,index){
-        //       let _asci = driz.web3.utils.toAscii(itm);
-        //       let _trim = _asci.trim();
-        //       let _replace = _trim.replace("[{", "{");
-        //       let _concat = _replace.concat("}");
-        //       let _obj = JSON.parse(_concat);
-        //       _time.push(_obj);
-        //   });
-        //   timeObj.push(_time);
-        //  //console.log(val);
-          
-        // });
-      // console.log(timeObj);
-        // docPracticeJSON.forEach(function(val,index){
-        //   //console.log("jsonpractice: " + val);
-        //   let parsedJSON = '';
-        //   try {
-        //       parsedJSON = JSON.parse(val);
-        //   }catch(e){
-        //     let str = '';
-        //     let jsonString = str.concat(val);
-        //     //parsedJSON = JSON.parse(jsonString);
-        //     //console.log(jsonString);
-        //   }
-    
-        //   docPractice.push(parsedJSON);
-        // });
       }
         return (
             <div style={cardStyle}>
@@ -309,26 +252,12 @@ class Doctors extends Component {
                     }
                     <ul className="tab-pane fade in">
                       {datesJSON[index][0].map((dt,di) =>
-                        //{dtt.times.map((dt,di) =>
-                        <li className="date list-group-item" id={"date"+di} key={di} onClick={(event) => this.toggleDateTime(event,driz.web3.utils.toAscii(dt),this.state.doctorKeys[0][index])}>
-                          {this.getLocalDateString(driz.web3.utils.toAscii(dt))} {this.getLocalTimeString(driz.web3.utils.toAscii(dt))}
+                        <li className="date list-group-item" id={"date"+di} key={di} onClick={(event) => this.toggleDateTime(event,driz.web3.utils.toAscii(dt),this.state.doctorKeys[0][index],di)}>
+                           {this.getLocalDateString(driz.web3.utils.toAscii(dt))} {this.getLocalTimeString(driz.web3.utils.toAscii(dt))}
                         </li>
-                      //  )}
                       )}
                       
                     </ul>
-                    {/* {datesJSON[index].map((dt,di) => 
-                      <ul key={di} className="dateToggle tab-pane fade" id={"dataToggle"+di}>
-                          {timeObj[index].map((dtime,dti) => 
-                            <li key={dti} className="list-group-item">
-                            <input type="radio" name="appointmentTime"  onChange={(event) => this.handleTime(event,dtime.time)} required/><span style={timeStyle}>{dtime.free && dtime.time}</span>
-                            </li>
-                            // {dtime.map((val,ind) => 
-                            //   <li key={ind}><a href="#/" >{driz.web3.utils.toAscii(val)}</a></li> 
-                            // )} 
-                         )}    
-                      </ul> 
-                    )} */}
                   
                   <button type="submit" className="btn btn-primary" style={btnStyle}>REQUEST APPOINTMENT</button>
                 </form>
