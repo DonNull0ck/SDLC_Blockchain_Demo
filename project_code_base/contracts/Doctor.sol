@@ -13,6 +13,7 @@ contract Doctors {
         // string zip;
         bytes32[] practiceAreas;
         bytes32[] appointments;
+        bytes32[] pastAppointments;
     }
     struct Date {
         uint id;
@@ -36,15 +37,6 @@ contract Doctors {
     event doctorAdded(
       uint indexed _doctorId
     );
-
-    //constructor
-    constructor () public {
-    //  _times = [(true,"9:00 am"),(true,"10:00 am"),(true,"11:00 am")];
-      // _date = ( "02/18/2019", _times);
-        //_time =  [Time(true,"9:00 am"), Time(true,"10:00 am")];
-        // addDoctor("Dr.Jane Doe", "Primary Care", "412-123-456", "Alleghney General Hospital"
-        // , "123 main street", "12345");
-    }
 
     function addDoctor(string _doctor, bytes32 _practiceAreas) public {
         doctorsCount++; // so we cud use as an id
@@ -72,7 +64,7 @@ contract Doctors {
     }
     string[] appTimes;
     function addDate(uint _id, string _date) public {
-      require(doctors[_id].id == _id, "doctor doesnt exist for that id!");
+      require(doctors[_id].id == _id, "inside add date: doctor doesnt exist for that id!");
       Doctor storage doctor = doctors[_id];
       appTimes = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM"];
       for(uint i=0; i < appTimes.length; i++){
@@ -97,6 +89,15 @@ contract Doctors {
     function getAllDoctors() public view returns(uint[]) {
       return doctorsList;
     }
+
+    function removeAppointment(uint _id, uint _appIndex)  public {
+      require(doctors[_id].id == _id, "inside removeApp:doctor doesnt exist for that id!");
+       Doctor storage doctor = doctors[_id];
+       bytes32  _pastApp = doctor.appointments[_appIndex];
+       doctor.pastAppointments.push(_pastApp);
+       delete doctor.appointments[_appIndex];
+    }
+
 
     function getDoctor(uint _id) public view returns (string,bytes32[],bytes32[]) {
         Doctor memory doctor = doctors[_id];

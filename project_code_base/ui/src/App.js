@@ -29,6 +29,7 @@ class App extends Component {
         userId: null,
         doctor:[],
         docId:null,
+        appIndex:null,
         appointment:null,
         accountRetrievedKey:null
     };
@@ -48,10 +49,11 @@ class App extends Component {
   handleAccount(account){
     this.setState({account});
   }
-  handleDoctor(doctor,appointment,docId){
+  handleDoctor(doctor,appointment,docId, appIndex){
     this.setState({doctor});
     this.setState({appointment});
     this.setState({docId});
+    this.setState({appIndex});
   }
   handleUserId(userId){
     this.setState({userId});
@@ -104,6 +106,7 @@ class App extends Component {
     const doctor = {
       doctor: this.state.doctor,
       docId: this.state.docId,
+      appIndex:this.state.appIndex,
       handleDoctor: this.handleDoctor,
       appointment: this.state.appointment
     };
