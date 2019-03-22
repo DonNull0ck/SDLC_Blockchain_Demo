@@ -1,3 +1,15 @@
 table tr td{
 	text-align: left;
 }
+.profile-container{
+	background: #44403eee;
+}
+.dateToggle {
+	display: none;
+}
+ul.breadcrumb li{
+	cursor: pointer;
+}
+ul.breadcrumb li:hover,ul.breadcrumb li.active{
+	color: blue;
+}

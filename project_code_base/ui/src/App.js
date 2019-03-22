@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import Signup from './patient_form/Signup'
 import Appointments from './appointments/Appointments'
-import Profile from './profile/Profile'
 import Home from './home/home'
-import Doctors from './profile/Doctor'
-import AddDoctor from './profile/AddDoctor'
+
 
 
 
@@ -21,10 +19,41 @@ const progressbar = {
 
 
 class App extends Component {
-  state = {
+  constructor (props) {
+    super(props);
+    this.state = {
         loading: true,
-        drizzleState: null
+        drizzleState: null,
+        isAuthenticated: false,
+        account:null,
+        userId: null,
+        doctor:[],
+        appointment:null,
+        accountRetrievedKey:null
     };
+    this.handleAuthentication = this.handleAuthentication.bind(this);
+    this.handleAccountRetrieveKey = this.handleAccountRetrieveKey.bind(this);
+    this.handleAccount = this.handleAccount.bind(this);
+    this.handleDoctor = this.handleDoctor.bind(this);
+    this.handleUserId = this.handleUserId.bind(this);
+  }
+
+  handleAuthentication(isAuthenticated){
+    this.setState({isAuthenticated});
+  }
+  handleAccountRetrieveKey(accountRetrievedKey){
+    this.setState({accountRetrievedKey});
+  }
+  handleAccount(account){
+    this.setState({account});
+  }
+  handleDoctor(doctor,appointment){
+    this.setState({doctor});
+    this.setState({appointment});
+  }
+  handleUserId(userId){
+    this.setState({userId});
+  }
 
   intializeDrizzle(){
     const {drizzle} = this.props;
@@ -58,6 +87,22 @@ class App extends Component {
     }
 
   render() {
+ //   console.log("inside app..");
+    const authProps = {
+      isAuthenticated: this.state.isAuthenticated,
+      handleAuthentication: this.handleAuthentication,
+      accountRetrievedKey: this.state.accountRetrievedKey,
+      handleAccountRetrieveKey: this.handleAccountRetrieveKey,
+      account: this.state.account,
+      handleAccount: this.handleAccount,
+      userId:this.state.userId,
+      handleUserId: this.handleUserId
+    };
+    const doctor = {
+      doctor: this.state.doctor,
+      handleDoctor: this.handleDoctor,
+      appointment: this.state.appointment
+    };
     if (this.state.loading) return (
         <div className="progress">
           <div className="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="loading" aria-valuemin="0" aria-valuemax="100" style={progressbar}>
@@ -87,34 +132,50 @@ class App extends Component {
               drizzleState={this.state.drizzleState}/>}
              />
              <Route
-              path="/profile"
-              render={(props) => <Profile {...props}
-              drizzle={this.props.drizzle}
-              drizzleState={this.state.drizzleState}/>}
-             />
-             <Route
               path="/doctors"
-              render={(props) => <Doctors {...props}
+              render={(props) => <Home {...props}
               drizzle={this.props.drizzle}
-              drizzleState={this.state.drizzleState}/>}
-              />}
+              drizzleState={this.state.drizzleState}
+              doctor={doctor}
+              authProps={authProps}/>}
              />
              <Route
               path="/add-doctor"
-              render={(props) => <AddDoctor {...props}
+              render={(props) => <Home {...props}
               drizzle={this.props.drizzle}
-              drizzleState={this.state.drizzleState}/>}
-              />}
+              drizzleState={this.state.drizzleState}
+              authProps={authProps}/>}
              />
             <Route
               exact={true}
               path="/"
               render={(props) => <Home {...props}
               drizzle={this.props.drizzle}
-              drizzleState={this.state.drizzleState}/>}
-              />}
+              drizzleState={this.state.drizzleState}
+              authProps={authProps}/>}
              />
-
+             <Route
+              path="/login"
+              render={(props) => <Home {...props}
+              drizzle={this.props.drizzle}
+              drizzleState={this.state.drizzleState}
+              authProps={authProps}/>}
+             />
+             <Route
+              path="/profile"
+              render={(props) => <Home {...props}
+              drizzle={this.props.drizzle}
+              drizzleState={this.state.drizzleState}
+              authProps={authProps}/>}
+             />
+             <Route
+              path="/review-appointment"
+              render={(props) => <Home {...props}
+              drizzle={this.props.drizzle}
+              drizzleState={this.state.drizzleState}
+              doctor={doctor}
+              authProps={authProps}/>}
+             />
             </Switch>
 
         </header>
