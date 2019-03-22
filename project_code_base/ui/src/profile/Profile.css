@@ -13,3 +13,6 @@ ul.breadcrumb li{
 ul.breadcrumb li:hover,ul.breadcrumb li.active{
 	color: blue;
 }
+.dateSelected {
+	background: #5cb85c !important;
+}

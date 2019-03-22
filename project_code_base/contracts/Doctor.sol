@@ -12,7 +12,8 @@ contract Doctors {
         // string address2;
         // string zip;
         bytes32[] practiceAreas;
-      //  bytes32[] dates;
+        bytes32[] appointments;
+        bytes32[] pastAppointments;
     }
     struct Date {
         uint id;
@@ -31,19 +32,11 @@ contract Doctors {
     uint[] public doctorsList;
     uint public doctorsCount;
     Date private date;
-    Time[] private _times;
+
+    //Time[] private _times;
     event doctorAdded(
       uint indexed _doctorId
     );
-
-    //constructor
-    constructor () public {
-    //  _times = [(true,"9:00 am"),(true,"10:00 am"),(true,"11:00 am")];
-      // _date = ( "02/18/2019", _times);
-        //_time =  [Time(true,"9:00 am"), Time(true,"10:00 am")];
-        // addDoctor("Dr.Jane Doe", "Primary Care", "412-123-456", "Alleghney General Hospital"
-        // , "123 main street", "12345");
-    }
 
     function addDoctor(string _doctor, bytes32 _practiceAreas) public {
         doctorsCount++; // so we cud use as an id
@@ -69,13 +62,21 @@ contract Doctors {
         //doctors[doctorsCount] = Doctor(doctorsCount,_doctor, _doctype, _phone, _address1, _address2, _zip);
         //addDate(doctorsCount);
     }
+    string[] appTimes;
     function addDate(uint _id, string _date) public {
-      require(doctors[_id].id == _id, "doctor doesnt exist for that id!");
-      Date storage date = dates[_id];
-      bytes32 _dateBytes32 =  stringToBytes32(_date);
-      date.dates.push(_dateBytes32);
-      string memory _timeStringObj = "[{\"time\":\"9:00 AM\",\"free\":\"true\"},{\"time\":\"10:00 AM\",\"free\":\"true\"},{\"time\":\"11:00 AM\",\"free\":\"true\"},{\"time\":\"12:00 PM\",\"free\":\"true\"},{\"time\":\"1:00 PM\",\"free\":\"true\"}]";
-      addTime(_id,_date,_timeStringObj);
+      require(doctors[_id].id == _id, "inside add date: doctor doesnt exist for that id!");
+      Doctor storage doctor = doctors[_id];
+      appTimes = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM"];
+      for(uint i=0; i < appTimes.length; i++){
+              string memory _dateTimeBuilder = string(abi.encodePacked(" "));
+              _dateTimeBuilder = string(abi.encodePacked(_date," ",appTimes[i]));
+              bytes32 _dateBytes32 =  stringToBytes32(_dateTimeBuilder);
+              doctor.appointments.push(_dateBytes32) -1;
+      }
+
+      //date.dates.push(_dateBytes32);
+      //string memory _timeStringObj = "";
+      //addTime(_id,_date,_timeStringObj);
       //  date = Date(_date,_time);
        //doctor.dates.push(date) -1;
     }
@@ -89,11 +90,20 @@ contract Doctors {
       return doctorsList;
     }
 
-    function getDoctor(uint _id) public view returns (string,bytes32[],bytes32[],bytes32[]) {
+    function removeAppointment(uint _id, uint _appIndex)  public {
+      require(doctors[_id].id == _id, "inside removeApp:doctor doesnt exist for that id!");
+       Doctor storage doctor = doctors[_id];
+       bytes32  _pastApp = doctor.appointments[_appIndex];
+       doctor.pastAppointments.push(_pastApp);
+       delete doctor.appointments[_appIndex];
+    }
+
+
+    function getDoctor(uint _id) public view returns (string,bytes32[],bytes32[]) {
         Doctor memory doctor = doctors[_id];
         Date memory _dates = dates[_id];
         Time memory _times = times[_id];
-        return (doctor.doctorObj,doctor.practiceAreas, _dates.dates,_times.times);
+        return (doctor.doctorObj,doctor.practiceAreas,doctor.appointments);
     }
 
     function stringToBytes32(string memory _source) returns (bytes32 result) {

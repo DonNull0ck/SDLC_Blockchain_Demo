@@ -17,11 +17,12 @@ class ReviewAppointment extends Component {
 	}
 
 	handleSubmit(event){
-		let date = this.props.doctor.appointment.date;
+		let date = this.props.doctor.appointment.toLocaleDateString();
         // let date = this.props.doctor.appointment.getDate();
         // let year = this.props.doctor.appointment.getFullYear();
         // let stringDate = month + "/" + date + "/" + year;
-    let time = this.props.doctor.appointment.time;
+		let time = this.props.doctor.appointment.toLocaleTimeString();
+	
    	let appObj = {
       		date: date,
       		time: time
@@ -30,13 +31,21 @@ class ReviewAppointment extends Component {
 
 		//let appStringDate = JSON.stringify(appObj);
 		const contract = drizzle.contracts.RegisterPatient;
+		const doctorAddress = drizzle.contracts.Doctors.address;
+		//console.log("doc address: " + doctorAddress);
 		const userId = this.props.authProps.userId;
+
+	//	let gasEst =  contract.web3.eth.estimateGas();
+	//	console.log("gas required: " + gasEst);
 
 		const stackId = contract.methods["setAppointment"].cacheSend(
 		   userId,
-		   JSON.stringify(appObj),
+			 JSON.stringify(appObj),
+			 this.props.doctor.docId,
+			 this.props.doctor.appIndex,
+			 doctorAddress,
 		   {
-			from: drizzleState.accounts[0], gas: 500000});
+			from: drizzleState.accounts[0], gas: 2000000});
 		//  save the `stackId` for later reference
 		 this.setState({ stackId }); 
 	}
@@ -77,13 +86,13 @@ class ReviewAppointment extends Component {
 							</div>
 
 							<div className="col-sm-5">
-									<p className="par">You have an appointment with {this.props.doctor.doctor.docName}</p>
-									<p className="par"><span className="glyphicon glyphicon-calendar"></span> {this.props.doctor.appointment.date}</p>
-									<p className="par"><span className="glyphicon glyphicon-time"></span> {this.props.doctor.appointment.time}</p>
-									<p className="par"><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.doctor.address1}</p>
-									<p className="par"><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.doctor.phone}</p>
-									<p className="par">Reason for Visit</p>
-									<p className="par">Headache</p>
+									<p>You have an appointment with {this.props.doctor.doctor.docName}</p>
+									<p><span className="glyphicon glyphicon-calendar"></span> {this.props.doctor.appointment.toLocaleDateString()}</p>
+									<p><span className="glyphicon glyphicon-time"></span> {this.props.doctor.appointment.toLocaleTimeString()}</p>
+									<p><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.doctor.address1}</p>
+									<p><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.doctor.phone}</p>
+									<p>Reason for Visit</p>
+									<p>Headache</p>
 							</div>
 
 							<div className = "col-sm-4 review-appointments">

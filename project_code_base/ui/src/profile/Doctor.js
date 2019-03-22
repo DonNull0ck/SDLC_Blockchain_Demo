@@ -9,6 +9,7 @@ import logo from '../logo.svg';
 const btnStyle = {
       'width': '100%'
 };
+
 const imgStyle = {
       'width': '120px',
       'height': '120px'
@@ -28,9 +29,12 @@ class Doctors extends Component {
   this.state = {
       requestApp:false,
       doctor: null,
+      docId:null,
+      appIndex:null,
       createProfile:false,
       appointmentDate: null,
       appointmentTime:null,
+      dateNotSelected:false,
       stackId:null,
       dataKey:null,
       contractError:false,
@@ -45,6 +49,8 @@ class Doctors extends Component {
   this.handleDate = this.handleDate.bind(this);
   this.handleTime = this.handleTime.bind(this);
   this.toggleDateTime = this.toggleDateTime.bind(this);
+  this.getLocalDateString = this.getLocalDateString.bind(this);
+  this.getLocalTimeString = this.getLocalTimeString.bind(this);
   }
 
   componentDidMount(){
@@ -61,9 +67,6 @@ class Doctors extends Component {
            });
         // save the `dataKey` to local component state for later reference
         this.setState({dataKey});
-       // const doctors = contract.methods.doctors; //
-        //this.setState({doctors});
-        //const doctorKeys = [];
         const state = this.state;
         contract.methods.getAllDoctors().call().then(function(res){
                 state.doctorKeys.push(res);
@@ -72,9 +75,6 @@ class Doctors extends Component {
                     let doctor = contract.methods.getDoctor(keys[i]).call();
                     doctor.then(function(res){
                         state.doctorsList.push(res);
-                        //let doctorPractice = drizzle.web3.utils.toAscii(res[6][0]);
-                       // let obj = JSON.parse(doctorPractice);
-                        //state.docPractice.push(res[1][0]);
                     })
                 }
         });
@@ -89,27 +89,19 @@ class Doctors extends Component {
         });
        
     }
-  toggleDateTime(event,id,_date){
+  toggleDateTime(event,_date,docId,appIndex){
       //event.preventDefault();
-      this.setState({ appointmentDate: _date});
-      var activeDateEls = document.getElementsByClassName("date");
-      for(let i=0; i<activeDateEls.length; i++){
-        activeDateEls[i].classList.remove("active");
-      }
-      var allToggleList = document.getElementsByClassName("dateToggle");     
-      for(let i=0; i<allToggleList.length; i++){
-        allToggleList[i].classList.remove('in', 'active');
-        allToggleList[i].style.display = "none";
-      }
-
-      var clickedEl = event.target;
-      clickedEl.classList.add("active");
-      
-     // allToggleList.classList.remove('fade', 'in', 'active');
-      var timeList = document.getElementById("dataToggle"+id);
-      timeList.style.display = "block";
-      timeList.classList.add('fade', 'in', 'active');
-     // console.log(timeList);
+      this.setState({ appointmentDate: new Date(_date)});
+      this.setState({dateNotSelected:false});
+      this.setState({appIndex:appIndex});
+      this.setState({docId});
+      var DateEls = document.getElementsByClassName("date");
+       for(let i=0; i<DateEls.length; i++){
+         DateEls[i].classList.remove('label', 'label-success', 'dateSelected');
+       }
+       var clickedEl = event.target;
+       
+       clickedEl.classList.add('label','label-success', 'dateSelected');
   }
   handleTime(event,time) {
     event.preventDefault();
@@ -127,6 +119,8 @@ class Doctors extends Component {
   clickSearch(event,index){
     event.preventDefault();
     this.setState({requestApp:!this.state.requestApp});
+    this.setState({dateNotSelected:false});
+    this.setState({ appointmentDate: null});
     if(this.state.clickedIndex === index){
       this.setState({clickedIndex: null});
       return;
@@ -136,11 +130,24 @@ class Doctors extends Component {
   }
   handleSubmit(event,doctor){
     event.preventDefault();
-    //this.setState({createProfile:true});
-    //this.setState({doctor:doctor});
-    const dateObj = {"date": this.state.appointmentDate, "time": this.state.appointmentTime};
-    this.props.doctor.handleDoctor(doctor,dateObj);
+    if(this.state.appointmentDate == null){
+        this.setState({dateNotSelected:true});
+        return;
+    }
+    this.setState({dateNotSelected:false});
+   
+    let _appIndex = this.state.appIndex.toString();
+    
+    const dateObj = this.state.appointmentDate;
+    this.props.doctor.handleDoctor(doctor,dateObj,this.state.docId,_appIndex);
     this.props.history.push('/review-appointment');  
+  }
+
+  getLocalDateString(date){
+    return new Date(date).toLocaleDateString();
+  }
+  getLocalTimeString(date){
+    return new Date(date).toLocaleTimeString();
   }
 
 
@@ -157,27 +164,31 @@ class Doctors extends Component {
      const docListJSON = [];
      const docList = [];
      const docPracticeJSON = [];
+     const dates32bytes = [];
      const datesJSON = [];
-     const timesJSON = [];
-     const timeObj = [];
-
 
      if(this.state.doctorsList.length === 0){
         return (
           <p className="errorMessage"><span>Doctors list is empty!</span></p>
         );
       }
+      const state = this.state;
       if(this.state.doctorsList.length) {
-       // console.log(this.state.doctorsList);
+     //  console.log(this.state.doctorsList);
         this.state.doctorsList.forEach(function(val,index){
           docListJSON.push(val["0"]);
           let practiceBytes32 = val["1"][0];
           let bytesToJSONstring = driz.web3.utils.toAscii(practiceBytes32);
+          //let practiceObj = JSON.parse(bytesToJSONstring);
+          //console.log(practiceObj);
           docPracticeJSON.push(bytesToJSONstring);
-          datesJSON.push(val["2"]);
-          timesJSON.push(val["3"]);
-          //timeObj.push(driz.web3.utils.toAscii(val["3"]));
+          let dateObj = {
+                  "id": state.doctorKeys[0][index],
+                  "times": val[2]
+          };
+          dates32bytes.push(dateObj);
         });
+        console.log(docPracticeJSON);
       }
       if(docListJSON.length){
         docListJSON.forEach(function(val,index){
@@ -186,35 +197,15 @@ class Doctors extends Component {
          // console.log(timesJSON);
           
         });
-        timesJSON.forEach(function(val,index){
-          let _time = [];
-          val.forEach(function(itm,index){
-              let _asci = driz.web3.utils.toAscii(itm);
-              let _trim = _asci.trim();
-              let _replace = _trim.replace("[{", "{");
-              let _concat = _replace.concat("}");
-              let _obj = JSON.parse(_concat);
-              _time.push(_obj);
-          });
-          timeObj.push(_time);
-         //console.log(val);
+      // console.log(dates32bytes);
+        dates32bytes.forEach(function(value,index){
+            let dates = [value.times];
+            datesJSON.push(dates);
+        //  });
+          
+        //console.log(docPracticeJSON);
           
         });
-      // console.log(timeObj);
-        // docPracticeJSON.forEach(function(val,index){
-        //   //console.log("jsonpractice: " + val);
-        //   let parsedJSON = '';
-        //   try {
-        //       parsedJSON = JSON.parse(val);
-        //   }catch(e){
-        //     let str = '';
-        //     let jsonString = str.concat(val);
-        //     //parsedJSON = JSON.parse(jsonString);
-        //     //console.log(jsonString);
-        //   }
-    
-        //   docPractice.push(parsedJSON);
-        // });
       }
         return (
             <div style={cardStyle}>
@@ -254,27 +245,19 @@ class Doctors extends Component {
                       className="apt-selector"
                       required
                     /> */}
-                    <ul className="breadcrumb">
-                      {datesJSON[index].map((dt,di) =>
-                        <li className="date" id={"date"+di} key={di} onClick={(event) => this.toggleDateTime(event,di,driz.web3.utils.toAscii(dt))}>
-                        {driz.web3.utils.toAscii(dt)}
+                    <input type="hidden" value={this.state.doctorKeys[0][index]}></input>
+                    {this.state.dateNotSelected === true ? 
+                    <p className="alert alert-danger">Please pick date and time!</p>
+                    :null
+                    }
+                    <ul className="tab-pane fade in">
+                      {datesJSON[index][0].map((dt,di) =>
+                        <li className="date list-group-item" id={"date"+di} key={di} onClick={(event) => this.toggleDateTime(event,driz.web3.utils.toAscii(dt),this.state.doctorKeys[0][index],di)}>
+                           {this.getLocalDateString(driz.web3.utils.toAscii(dt))} {this.getLocalTimeString(driz.web3.utils.toAscii(dt))}
                         </li>
-                        
                       )}
                       
                     </ul>
-                    {datesJSON[index].map((dt,di) => 
-                      <ul key={di} className="dateToggle tab-pane fade" id={"dataToggle"+di}>
-                          {timeObj[index].map((dtime,dti) => 
-                            <li key={dti} className="list-group-item">
-                            <input type="radio" name="appointmentTime"  onChange={(event) => this.handleTime(event,dtime.time)} required/><span style={timeStyle}>{dtime.free && dtime.time}</span>
-                            </li>
-                            // {dtime.map((val,ind) => 
-                            //   <li key={ind}><a href="#/" >{driz.web3.utils.toAscii(val)}</a></li> 
-                            // )} 
-                         )}    
-                      </ul> 
-                    )}
                   
                   <button type="submit" className="btn btn-primary" style={btnStyle}>REQUEST APPOINTMENT</button>
                 </form>

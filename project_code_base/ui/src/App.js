@@ -28,6 +28,8 @@ class App extends Component {
         account:null,
         userId: null,
         doctor:[],
+        docId:null,
+        appIndex:null,
         appointment:null,
         accountRetrievedKey:null
     };
@@ -47,9 +49,11 @@ class App extends Component {
   handleAccount(account){
     this.setState({account});
   }
-  handleDoctor(doctor,appointment){
+  handleDoctor(doctor,appointment,docId, appIndex){
     this.setState({doctor});
     this.setState({appointment});
+    this.setState({docId});
+    this.setState({appIndex});
   }
   handleUserId(userId){
     this.setState({userId});
@@ -61,6 +65,7 @@ class App extends Component {
         this.unsubscribe = drizzle.store.subscribe(() => {
             // every time the store updates, grab the state from drizzle
             const drizzleState = drizzle.store.getState();
+           // console.log(drizzleState);
 
             // check to see if it's ready, if so, update local component state
             if (drizzleState.drizzleStatus.initialized) {
@@ -100,6 +105,8 @@ class App extends Component {
     };
     const doctor = {
       doctor: this.state.doctor,
+      docId: this.state.docId,
+      appIndex:this.state.appIndex,
       handleDoctor: this.handleDoctor,
       appointment: this.state.appointment
     };

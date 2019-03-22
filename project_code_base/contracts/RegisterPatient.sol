@@ -2,7 +2,7 @@ pragma solidity >=0.4.0 <0.6.0;
 import "./Doctor.sol";
 
 
-contract RegisterPatient is Doctors {
+contract RegisterPatient {
   struct Patient {
         uint id;
         string userInfo;
@@ -16,6 +16,7 @@ contract RegisterPatient is Doctors {
     mapping (uint => Appointment) appointments;
     uint public patientCounts;
     uint[] public patientAccts;
+    //private Doctors doctor;
     event AccountNotFound(
       uint indexed _patientId
     );
@@ -33,10 +34,18 @@ contract RegisterPatient is Doctors {
     }
 
 //once the user is logged in call this method to set the appointment
-    function setAppointment(uint _id, string _appointment) public {
+    function setAppointment(uint _id, string _appointment, uint _docId, uint _appIndex, address _docAddress) public {
         Appointment storage appointment = appointments[_id];
         bytes32 _appBytes32 = string2Bytes32(_appointment);
         appointment.appointments.push(_appBytes32) -1;
+      //  uint castDocId = uint(_docId);
+      //  uint castAppIndex = uint(_appIndex);
+         Doctors doc = Doctors(_docAddress);
+      //  bytes32  _pastApp = doc.appointments[_appIndex];
+      //  doc.pastAppointments.push(_pastApp);
+      //  delete doc.appointments[_appIndex];
+       doc.removeAppointment(_docId,_appIndex);
+
     }
 
 
