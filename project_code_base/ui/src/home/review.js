@@ -91,7 +91,7 @@ class ReviewAppointment extends Component {
 									<p><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.doctor.address1}</p>
 									<p><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.doctor.phone}</p>
 									<p>Reason for Visit</p>
-									<p>Headache</p>
+									<div id = "ReasonforVisit" contentEditable>Enter Reason Here</div>
 							</div>
 
 							<div className = "col-sm-4 review-appointments">
