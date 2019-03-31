@@ -86,6 +86,7 @@ class ReviewAppointment extends Component {
 							</div>
 
 							<div className="col-sm-5">
+
 									<p className="par">You have an appointment with {this.props.doctor.doctor.docName}</p>
 									<p className="par"><span className="glyphicon glyphicon-calendar"></span> {this.props.doctor.appointment.toLocaleDateString()}</p>
 									<p className="par"><span className="glyphicon glyphicon-time"></span> {this.props.doctor.appointment.toLocaleTimeString()}</p>
@@ -93,6 +94,7 @@ class ReviewAppointment extends Component {
 									<p className="par"><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.doctor.phone}</p>
 									<p className="par">Reason for Visit</p>
 									<p className="par">Headache</p>
+
 							</div>
 
 							<div className = "col-sm-4 review-appointments">
