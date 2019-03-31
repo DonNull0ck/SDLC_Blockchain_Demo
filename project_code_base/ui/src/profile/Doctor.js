@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import logo from '../logo.svg';
+import logo from '../DoctorImage.png';
 
 const btnStyle = {
       'width': '100%'

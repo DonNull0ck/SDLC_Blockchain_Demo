@@ -3,20 +3,23 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import logo from '../logo.svg';
+import docImg from '../DoctorImage.png';
 import DoctorList from './doctors-json';
 import  { Redirect,Route} from 'react-router-dom';
 import CreateProfile from './register'
 
 
 const btnStyle = {
-      'width': '100%'
+      'width': '75%',
+      'height':'48px'
 };
 const imgStyle = {
-      'width': '120px',
-      'height': '120px'
+      'width': '200px',
+      'height': '200px'
 };
 const cardStyle = {
-      'marginTop': '25px'
+      'marginTop': '25px',
+      'background-color': '#fff'
 };
 
 class Card extends Component {
@@ -70,12 +73,13 @@ class Card extends Component {
       
     return (
       <div style={cardStyle}>
+    
       {arr.map((item,index) => 
       <div className="row doctor-card" key={index}>
         <div className="col-sm-3">
-          <img src={logo} alt="doctor-img" className="img-thumbnail" style={imgStyle}/>
+          <img src={docImg} alt="doctor-img" className="img-thumbnail" style={imgStyle}/>
         </div>
-      <div className="col-sm-6" >
+      <div className="col-sm-3" >
         <h4>{item.name}</h4>
         <p className="par">{item.type}</p>
         <p className="par"><span className="glyphicon glyphicon-earphone"> </span> {item.phone}</p>
@@ -107,6 +111,7 @@ class Card extends Component {
         :null}
         </div>
       )}
+      
     </div>  
     );
   }
