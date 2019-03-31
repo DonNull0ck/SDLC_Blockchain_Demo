@@ -80,11 +80,11 @@ handleSubmit(event) {
             </div>
             <div className="appointments">
             <p>
-              <span>Navigation</span>
+              <span className ="navtitle" >Navigation</span>
             </p>
             <p>
               <span className="glyphicon glyphicon-home"></span>
-              <a href="#/">
+              <a href="/appointments">
               <span className="txt">APPOINTMENTS</span></a>
             </p>
             <p>
@@ -93,7 +93,7 @@ handleSubmit(event) {
             </p>
 
             <p>
-              <span>Tools</span>
+              <span className ="navtitle">Tools</span>
             </p>
             <p>
               <span className="glyphicon glyphicon-calendar"></span>

@@ -151,7 +151,7 @@ class CreateProfile extends Component {
       <div className="row register-user">
       <div className="col-sm-12">
         <div className="panel panel-primary" style={leftPanelStyle}>
-        <div className="panel-heading">Create Profile or Login Below</div>
+        <div className="panel-heading">Create Profile </div>
       <div className="panel-body">
       <p className="errorMessage">{this.state.contractError === true ? <span>Internal Error, Please try again later!</span>:null}</p>
       <p  className="errorMessage">{this.state.stackId != null? <span>Transaction Status:{this.getTxStatus()}</span>:null}</p>
