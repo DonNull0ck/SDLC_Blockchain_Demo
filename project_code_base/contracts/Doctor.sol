@@ -51,11 +51,11 @@ contract Doctors {
         // doctor.zip = _zip;
         doctor.practiceAreas.push(_practiceAreas);
         doctorsList.push(doctorsCount) -1;
-        addDate(doctorsCount, "03/20/2019");
-        addDate(doctorsCount, "03/21/2019");
-        addDate(doctorsCount, "03/22/2019");
-        addDate(doctorsCount, "03/23/2019");
-        addDate(doctorsCount, "03/24/2019");
+        addDate(doctorsCount, "04/04/2019");
+        addDate(doctorsCount, "04/05/2019");
+        addDate(doctorsCount, "04/09/2019");
+        addDate(doctorsCount, "04/10/2019");
+        addDate(doctorsCount, "04/11/2019");
         doctorAdded(doctorsCount);
 
       //  doctor.dates = _date;
