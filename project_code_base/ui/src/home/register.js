@@ -6,27 +6,19 @@ import ReviewAppointment from './review';
 
 
 const imgStyle = {
-  
 	'width': '120px',
 	'height': '120px',
 	'marginLeft': '30%'
 };
 const btnStyle = {
-  'font-size':'18px',
-  'width': '422px',
-  'height':'48px',
-  'marginLeft': '30%',
-  'marginTop': '60px',
-  'background-color':'#4792d1'
+	'width': '120px',
+	'marginLeft': '42%'
 };
 const lgnbtnStyle = {
-  'font-size':'18px',
-  'width': '422px',
-  'height':'48px',
+	'width': '120px',
 	'display': 'block',
-	'marginLeft': '30%',
-  'marginTop': '30px',
-  'marginBottom': '30px',
+	'marginLeft': '42%',
+	'marginTop': '20px',
 	'border': '2px solid #2b5c92'
 
 };
@@ -151,7 +143,7 @@ class CreateProfile extends Component {
       <div className="row register-user">
       <div className="col-sm-12">
         <div className="panel panel-primary" style={leftPanelStyle}>
-        <div className="panel-heading">Create Profile </div>
+        <div className="panel-heading">Create Profile or Login Below</div>
       <div className="panel-body">
       <p className="errorMessage">{this.state.contractError === true ? <span>Internal Error, Please try again later!</span>:null}</p>
       <p  className="errorMessage">{this.state.stackId != null? <span>Transaction Status:{this.getTxStatus()}</span>:null}</p>

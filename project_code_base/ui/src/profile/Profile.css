@@ -2,30 +2,7 @@ table tr td{
 	text-align: left;
 }
 .profile-container{
-	/*background: #44403eee;*/
-	color:black;
-	margin-top: 4%;
-	padding-left:10%;
-	padding-right: 10%;
-}
-
-.form-group label{
-	margin-left:10%;
-}
-.form-group input{
-	margin-left:10%;
-	width: 70%;
-}
-
-.profile-img{
-	width: 150px;
-	height: 150px;
-	margin-left: 50%;
-	margin-right: 50%;
-}
-
-.profile-container button{
-	margin: 5%;
+	background: #44403eee;
 }
 .dateToggle {
 	display: none;

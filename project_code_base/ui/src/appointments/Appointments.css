@@ -1,48 +1,25 @@
-
-
-.myapp-container{
-	width:80%;
-	margin-left: 10%;
-	margin-right: 10%;
+.react-datepicker{
+	width: 300px;
+	font-size: 1.8rem;
 }
-
-.myapp-container .panel-heading{
-    text-align: left;
+.react-datepicker__month-container{
+	width: 298px;
 }
-
-.myapp-container table{
-	width:80%;
-	margin-left: 10%;
-	margin-right:10%;
+.react-datepicker__current-month{
+	font-size: 1.8rem;
 }
-
-.myapp-container table th{
-	color:#2f6690;
-	font-size: 18px;
-	font-weight: bold;
-	padding:5px;
-	margin-left: 10px;
-	margin-right:10px;
-	text-align: center;
+.react-datepicker__day-name{
+	padding: 18px;
 }
-
-.myapp-container td{
-	font-size: 18px;
-	padding:10px;
-	text-align: center;
+.react-datepicker__day, .react-datepicker__day--selected{
+	padding-right: 25px;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
-
-.myapp-container tbody{
-	padding:5px;
-	border:solid 1px #d2d2d2;
-	border-radius: 4px;
-
-}
-
-.myapp-container tr{
-	width: 80%;
-	margin-left: 10%;
-	margin-right: 10%;
-	border-bottom: solid 1px #d2d2d2;
+.react-datepicker__day--selected{
+	padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 8px;
 
 }

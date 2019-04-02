@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
-import docImg from '../DoctorImage.png'
 import { Link } from 'react-router-dom';
 
 const buttonStyle = {
@@ -82,19 +81,17 @@ class ReviewAppointment extends Component {
 						<div className="panel-body">
 						<p  className="errorMessage">{this.state.stackId != null? <span>Transaction Status:{this.getTxStatus()}</span>:null}</p>
 							<div className="col-sm-3">
-								<img src={docImg} className="img-thumbnail" alt="DoctorPhoto" />
+								<img src={logo} className="img-thumbnail" alt="DoctorPhoto" />
 							</div>
 
 							<div className="col-sm-5">
-
-									<p className="par">You have an appointment with {this.props.doctor.doctor.docName}</p>
-									<p className="par"><span className="glyphicon glyphicon-calendar"></span> {this.props.doctor.appointment.toLocaleDateString()}</p>
-									<p className="par"><span className="glyphicon glyphicon-time"></span> {this.props.doctor.appointment.toLocaleTimeString()}</p>
-									<p className="par"><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.doctor.address1}</p>
-									<p className="par"><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.doctor.phone}</p>
-									<p className="par">Reason for Visit</p>
-									<p className="par">Headache</p>
-
+									<p>You have an appointment with {this.props.doctor.doctor.docName}</p>
+									<p><span className="glyphicon glyphicon-calendar"></span> {this.props.doctor.appointment.toLocaleDateString()}</p>
+									<p><span className="glyphicon glyphicon-time"></span> {this.props.doctor.appointment.toLocaleTimeString()}</p>
+									<p><span className="glyphicon glyphicon-map-marker"></span>{this.props.doctor.doctor.address1}</p>
+									<p><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.doctor.phone}</p>
+									<p>Reason for Visit</p>
+									<div id = "ReasonforVisit" contentEditable>Enter Reason Here</div>
 							</div>
 
 							<div className = "col-sm-4 review-appointments">
