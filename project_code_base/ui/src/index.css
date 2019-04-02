@@ -14,6 +14,16 @@ code {
 }
 
 .errorMessage {
-	color:red;
+  color:rgb(15, 14, 14);
+  font-weight: bold;
 	text-align: center;
 }
+.pagination > li {
+  display: inline-block !important;
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  cursor:pointer;
+}
+

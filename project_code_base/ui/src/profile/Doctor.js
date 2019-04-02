@@ -21,6 +21,35 @@ const cardStyle = {
 const timeStyle = {
   'marginLeft': '10px'
 };
+const loadingDoctor = {
+   'width': '100%'
+}
+const appSelectStyle = {
+  'width': '195px',
+  'height': '49px',
+  'marginBottom': '40px',
+  'marginLeft': '49px'
+}
+const appSelectIcon = {
+  'color':'white',
+  'padding': '15px',
+  'fontSize': '18px'
+}
+const selectIconContainer = {
+  'width': '49px',
+  'height': '49px',
+  'marginTop': '-90px',
+  'border': '1px solid #81c3d7',
+  'background':'#81c3d7',
+  'borderRadius': '4px',
+  'borderTopRightRadius': '0px',
+  'borderBottomRightRadius': '0px'
+}
+const requestAppDiv = {
+  'position': 'absolute',
+  'left': '-120%',
+  'top': '155%'
+}
 
 class Doctors extends Component {
   constructor (props) {
@@ -32,7 +61,7 @@ class Doctors extends Component {
       docId:null,
       appIndex:null,
       createProfile:false,
-      appointmentDate: null,
+      app: {appointmentDate: ''},
       appointmentTime:null,
       dateNotSelected:false,
       stackId:null,
@@ -51,6 +80,10 @@ class Doctors extends Component {
   this.toggleDateTime = this.toggleDateTime.bind(this);
   this.getLocalDateString = this.getLocalDateString.bind(this);
   this.getLocalTimeString = this.getLocalTimeString.bind(this);
+  this.addMinDate = this.addMinDate.bind(this);
+  this.addMaxDate = this.addMaxDate.bind(this);
+  this.filterDates = this.filterDates.bind(this);
+  this.getLocalDateTimeString = this.getLocalDateTimeString.bind(this);
   }
 
   componentDidMount(){
@@ -109,18 +142,28 @@ class Doctors extends Component {
       appointmentTime: time
     });
   }
-  handleDate(event,date){
-    event.preventDefault();
-    this.setState({
-      appointmentDate: date
-    });
+  handleDate(event,docId){
+    const target = event.target;
+    const value =  target.value;
+    const name = target.name;
+    let fields = this.state.app;
+    fields[name] = new Date(value);
+    this.setState({fields});
+    // this.setState({
+    //   appointmentDate: new Date(value)
+    // });
+    console.log("docId: " + docId);
+   this.setState({docId});
+   this.setState({appIndex:target.selectedIndex -1 });
   }
   //requestApp = false;
   clickSearch(event,index){
     event.preventDefault();
     this.setState({requestApp:!this.state.requestApp});
-    this.setState({dateNotSelected:false});
-    this.setState({ appointmentDate: null});
+   // this.setState({dateNotSelected:false});
+   // let field = this.state.app;
+  //  field.appointmentDate = '';
+   // this.setState({field});
     if(this.state.clickedIndex === index){
       this.setState({clickedIndex: null});
       return;
@@ -129,16 +172,17 @@ class Doctors extends Component {
     
   }
   handleSubmit(event,doctor){
-    event.preventDefault();
-    if(this.state.appointmentDate == null){
-        this.setState({dateNotSelected:true});
-        return;
-    }
-    this.setState({dateNotSelected:false});
+   event.preventDefault();
+    // if(this.state.app.appointmentDate === ''){
+    //   console.log("handle submit: ");
+    //     this.setState({dateNotSelected:true});
+    //     return;
+    // }
+   // this.setState({dateNotSelected:false});
    
     let _appIndex = this.state.appIndex.toString();
     
-    const dateObj = this.state.appointmentDate;
+    const dateObj = this.state.app.appointmentDate;
     this.props.doctor.handleDoctor(doctor,dateObj,this.state.docId,_appIndex);
     this.props.history.push('/review-appointment');  
   }
@@ -149,7 +193,41 @@ class Doctors extends Component {
   getLocalTimeString(date){
     return new Date(date).toLocaleTimeString();
   }
+  getLocalDateTimeString(date){
+    let _date = new Date(date);
+    let _localDate = _date.toDateString();
+    let _localTime = _date.toLocaleTimeString();
+    return _localDate + " " + _localTime;
+  }
 
+  addMinDate(date){
+      let dateArray = date;
+      const _utils = this.props.drizzle.web3.utils;
+     // let _minDate = _utils.toAscii(dateArray[0]);
+      let timeArray = [];
+      for(let i=0; i<dateArray.length; i++){
+        let temp = _utils.toAscii(dateArray[i]);
+        timeArray.push(new Date(temp));
+      }
+      return timeArray;
+  }
+  addMaxDate(date){
+    let dateArray = date;
+    const _utils = this.props.drizzle.web3.utils;
+    let _maxDate = _utils.toAscii(dateArray[dateArray.length - 1]);
+    return new Date((_maxDate));
+  }
+  filterDates(dates){
+    let dateArray = dates[0];
+    let uniqueDates = [];
+    const _utils = this.props.drizzle.web3.utils;
+    for(let i=0; i<dateArray.length; i++){
+      let temp = _utils.toAscii(dateArray[i]);
+      uniqueDates.push(this.getLocalDateString(temp));
+    }
+    let unique = src => [...new Set(src)];
+    return unique(uniqueDates);
+  }
 
 
   render() {
@@ -166,10 +244,13 @@ class Doctors extends Component {
      const docPracticeJSON = [];
      const dates32bytes = [];
      const datesJSON = [];
+     const timesJSON = [];
 
      if(this.state.doctorsList.length === 0){
         return (
-          <p className="errorMessage"><span>Doctors list is empty!</span></p>
+          <div className="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="loading" aria-valuemin="0" aria-valuemax="100" style={loadingDoctor}>
+            loading doctor..
+          </div>
         );
       }
       const state = this.state;
@@ -178,17 +259,21 @@ class Doctors extends Component {
         this.state.doctorsList.forEach(function(val,index){
           docListJSON.push(val["0"]);
           let practiceBytes32 = val["1"][0];
-          let bytesToJSONstring = driz.web3.utils.toAscii(practiceBytes32);
-          //let practiceObj = JSON.parse(bytesToJSONstring);
-          //console.log(practiceObj);
-          docPracticeJSON.push(bytesToJSONstring);
+          let bytesToJSONstring = driz.web3.utils.hexToString(practiceBytes32);
+           let practiceObj = JSON.parse(bytesToJSONstring);
+           let tempArray = [];
+           for(let i in practiceObj){
+              tempArray.push(practiceObj[i]);
+           }
+          // console.log(practiceObj);
+          docPracticeJSON.push(tempArray);
           let dateObj = {
                   "id": state.doctorKeys[0][index],
                   "times": val[2]
           };
           dates32bytes.push(dateObj);
         });
-        console.log(docPracticeJSON);
+       // console.log(docPracticeJSON);
       }
       if(docListJSON.length){
         docListJSON.forEach(function(val,index){
@@ -198,12 +283,16 @@ class Doctors extends Component {
           
         });
       // console.log(dates32bytes);
+        const current = this;
         dates32bytes.forEach(function(value,index){
             let dates = [value.times];
-            datesJSON.push(dates);
+            let temp = current.filterDates(dates);
+          //  console.log(temp);
+            datesJSON.push(temp);
+            timesJSON.push(dates);
         //  });
           
-        //console.log(docPracticeJSON);
+     //  console.log(docPracticeJSON);
           
         });
       }
@@ -211,7 +300,7 @@ class Doctors extends Component {
             <div style={cardStyle}>
             {docList.map((item,index) => 
             <div className="row doctor-card" key={index} index={index}>
-              <div className="col-sm-3">
+              <div className="col-sm-2">
                 <img src={logo} alt="doctor-img" className="img-thumbnail" style={imgStyle}/>
               </div>
               <div className="col-sm-4">
@@ -221,48 +310,72 @@ class Doctors extends Component {
               <p className="par"><span className="glyphicon glyphicon-map-marker"></span>{item.address1}</p>
               <p className="par">{item.address2}</p> 
               </div>
-            <div className="col-sm-5">
+            <div className="col-sm-2">
               <h5>Practice Areas </h5>
-              <p className="par" >{docPracticeJSON[index]}</p>
-             {/* {docPracticeJSON.map((itm,idx) =>
+              {/* <p className="par" >{docPracticeJSON[index]}</p> */}
+             {docPracticeJSON[index].map((itm,idx) =>
                   <p className="par" key={idx}>{itm}</p>
-              )}  */}
-              {this.props.authProps.isAuthenticated === false ?
+              )} 
+              {/* {this.props.authProps.isAuthenticated === false ?
+              <Link to={{pathname: '/login', params: {goto: "/doctors"} }} className="btn btn-primary">Login to request an appointment</Link> 
+              :
+              <button className="btn btn-primary" onClick={(event) => this.clickSearch(event,index)}>{this.state.clickedIndex !== index ? 'Request Appointment': 'Cancel'}</button>
+              } */}
+
+            </div>
+            <div className="col-sm-3">
+            <form method="POST" name="AppForm" onSubmit={(event) => this.handleSubmit(event,item)}>
+            <div className="form-group">
+              <select className="form-control"	style={appSelectStyle}
+              value={this.state.appointmentDate}
+              onChange={(event) => this.handleDate(event,this.state.doctorKeys[0][index])}
+              name="appointmentDate"
+              required
+              >
+                <option></option>
+                {timesJSON[index][0].map((dt,di) =>
+                  <option  key={di} value={driz.web3.utils.toAscii(dt)} index={di}>{this.getLocalDateTimeString(driz.web3.utils.toAscii(dt))}</option>
+                )}
+             </select>
+             <div style={selectIconContainer}>
+    	         <span className="glyphicon glyphicon-time" style={appSelectIcon}>
+          	  </span>
+            </div>
+            </div>
+            {this.props.authProps.isAuthenticated === false ?
               <Link to={{pathname: '/login', params: {goto: "/doctors"} }} className="btn btn-primary">Login to request an appointment</Link> 
               :
               <button className="btn btn-primary" onClick={(event) => this.clickSearch(event,index)}>{this.state.clickedIndex !== index ? 'Request Appointment': 'Cancel'}</button>
               }
-
+              <div className="col-sm-12" style={requestAppDiv}>
+              {this.state.clickedIndex === index ?
+                <button type="submit" className="btn btn-primary" style={btnStyle}>REQUEST APPOINTMENT</button>
+                :null
+              }
+              </div>
+            </form>
             </div>
-            {this.state.clickedIndex === index ?
+            {/* {this.state.clickedIndex === index ?
               <div className="col-sm-12">
                   <form method="POST" onSubmit={(event) => this.handleSubmit(event,item)}>
-                    {/* <DatePicker
-                      selected={this.state.appointmentDate}
-                      onChange={this.handleDate}
-                      minDate={new Date()}
-                      placeholderText="Please select your appointment date"
-                      className="apt-selector"
-                      required
-                    /> */}
                     <input type="hidden" value={this.state.doctorKeys[0][index]}></input>
                     {this.state.dateNotSelected === true ? 
                     <p className="alert alert-danger">Please pick date and time!</p>
                     :null
                     }
                     <ul className="tab-pane fade in">
-                      {datesJSON[index][0].map((dt,di) =>
+                      {timesJSON[index][0].map((dt,di) =>
                         <li className="date list-group-item" id={"date"+di} key={di} onClick={(event) => this.toggleDateTime(event,driz.web3.utils.toAscii(dt),this.state.doctorKeys[0][index],di)}>
                            {this.getLocalDateString(driz.web3.utils.toAscii(dt))} {this.getLocalTimeString(driz.web3.utils.toAscii(dt))}
                         </li>
                       )}
                       
                     </ul>
-                  
+                    
                   <button type="submit" className="btn btn-primary" style={btnStyle}>REQUEST APPOINTMENT</button>
                 </form>
               </div>
-              :null}
+              :null} */}
               </div>
             )}
           </div>  

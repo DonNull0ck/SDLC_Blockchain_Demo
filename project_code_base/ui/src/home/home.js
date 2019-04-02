@@ -6,8 +6,7 @@ import Profile from '../profile/Profile';
 import Doctors from '../profile/Doctor';
 import AddDoctor from '../profile/AddDoctor';
 import ReviewAppointment from './review';
-
-
+import Appointment from '../profile/Appointment';
 
 import './home.css';
 
@@ -82,8 +81,8 @@ handleSubmit(event) {
             <div className="appointments">
             <p>
               <span className="glyphicon glyphicon-home"></span>
-              <a href="#/"><span className="txt">MY</span>
-              <span className="txt span-block">APPOINTMENTS</span></a>
+              <Link to="/appointments"><span className="txt">MY</span>
+              <span className="txt span-block">APPOINTMENTS</span></Link>
             </p>
             <p>
               <span className="glyphicon glyphicon-user"></span>
@@ -114,6 +113,14 @@ handleSubmit(event) {
               render={(props) => <LoginComponent {...props}
               drizzle={this.props.drizzle}
               drizzleState={this.props.drizzleState}
+              authProps={this.props.authProps}/>}
+             />
+             <Route
+              path="/appointments"
+              render={(props) => <Appointment {...props}
+              drizzle={this.props.drizzle}
+              drizzleState={this.props.drizzleState}
+              doctor={this.props.doctor}
               authProps={this.props.authProps}/>}
              />
              <Route

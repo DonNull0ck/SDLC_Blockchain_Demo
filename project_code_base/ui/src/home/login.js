@@ -140,9 +140,8 @@ class LoginComponent extends Component {
     if(patients && patients.value === "0"){
         return (
         <div className="jumbotron">
-            <p style={parStyle}>No registered account yet, please create at least one account first!</p>
             <Link to="/">
-                <p>Click here to go to create one</p>
+                <p>Click here to create a new account</p>
             </Link>
         </div>
         );
