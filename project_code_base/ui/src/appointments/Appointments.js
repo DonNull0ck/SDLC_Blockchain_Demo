@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './Appointments.css';
-import { Link } from 'react-router-dom';
 
 class Appointments extends Component {
   constructor(props) {
@@ -70,48 +69,31 @@ class Appointments extends Component {
   };
 
   render() {
-    /*
     if(this.getTxStatus() == "success"){
       this.props.history.push('/profile');
     }
     var disabled = this.state.startDate == null ? true:false;
-    */
-   
-     
     return (
-      <div className="myapp-container">
-      <div className="col-sm-12">
-        <div className="panel panel-primary" >
-        <div className="panel-heading">APPOINTMENT DETAILS</div>
-        <div className="panel-body">
-        <p className="errorMessage">{this.state.contractError === true ? <span>Internal Error, Please try again later!</span>:null}</p>
-        <p  className="errorMessage">{this.state.stackId != null? <span>Transaction Status:{this.getTxStatus()}</span>:null}</p>
-        <table>
-         <thead>
-           <th>Date</th>
-           <th>Time</th>
-           <th>Doctor Name</th>
-         </thead>
-        <tbody>
-         <tr>
-           <td>02/03/2019</td>
-           <td>13:30</td>
-           <td>Dr Maxine</td>
-         </tr>
-         <tr>
-           <td>02/03/2019</td>
-           <td>13:30</td>
-           <td>Dr Maxine</td>
-         </tr>
-        </tbody>
-        </table>
-        
-        
-        
+      <div className="container">
+        <h2>Pick your appointment here</h2>
+        <div className="jumbotron">
+        <p className="errorMessage">{this.state.contractError == true ? <span>Internal Error, Please try again later!</span>:null}</p>
+          <p  className="errorMessage">{this.state.stackId != null? <span>Transaction Status:{this.getTxStatus()}</span>:null}</p>
+        <form  method="POST" name="Appointment" onSubmit={this.handleSubmit}>
+          <DatePicker
+            inline
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            peekNextMonth
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+          />
+          <div>
+            <button type="submit"  disabled={disabled} className="btn btn-lg btn-primary">Submit</button>
+          </div>
+        </form>
         </div>
-        </div>
-      </div>
-        
       </div>
       
     );

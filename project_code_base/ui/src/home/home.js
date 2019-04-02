@@ -12,7 +12,7 @@ import ReviewAppointment from './review';
 import './home.css';
 
 const inputKeyword = {
-      'width': '596px'
+      'width': '346px'
 };
 const parStyle = {
       'display': 'inline'
@@ -22,14 +22,14 @@ const parStyle2 = {
   'marginLeft': '5px'
 };
 const inputProvider = {
-      'width': '389px'
+      'width': '230px'
 };
 const heroStyle = {
       'border': '20px solid #444444'
 };
 const userColStyle = {
       'paddingLeft': '0px',
-      'paddingRight': '20px',
+      'paddingRight': '50px'
 };
 
 class Home extends Component {
@@ -66,6 +66,7 @@ handleSubmit(event) {
         <div className="row" style={heroStyle}>
           <div className="col-sm-2 left-nav" style={userColStyle}>
             <div className="user">
+              <h4>APP NAME</h4>
               <span className="glyphicon glyphicon-user"></span>
               {this.props.authProps.isAuthenticated === false ?
               <p style={parStyle}>
@@ -80,20 +81,13 @@ handleSubmit(event) {
             </div>
             <div className="appointments">
             <p>
-              <span className ="navtitle" >Navigation</span>
-            </p>
-            <p>
               <span className="glyphicon glyphicon-home"></span>
-              <a href="/appointments">
-              <span className="txt">APPOINTMENTS</span></a>
+              <a href="#/"><span className="txt">MY</span>
+              <span className="txt span-block">APPOINTMENTS</span></a>
             </p>
             <p>
               <span className="glyphicon glyphicon-user"></span>
               <Link to="/profile"><span className="txt">PROFILE</span></Link>
-            </p>
-
-            <p>
-              <span className ="navtitle">Tools</span>
             </p>
             <p>
               <span className="glyphicon glyphicon-calendar"></span>
@@ -157,7 +151,7 @@ handleSubmit(event) {
           {/* <div className="col-sm-10">
             {this.state.appointmentRequested === false ?
             <div className="">
-              <p className="par search-title">Search for Caregivers</p>
+              <p className="par">Search for Caregivers</p>
               <form className="form-inline" method="POST"  onSubmit={this.handleSubmit}>
                 <div className="form-group">
                 <input type="text" className="form-control" style={inputKeyword} placeholder="Enter name,specialty,condition,practice or keyword" name="keyword"/>
@@ -168,7 +162,7 @@ handleSubmit(event) {
                 <div className="form-group form-padding-left form-padding-right">
                   <input type="text" className="form-control" style={inputProvider} placeholder="Insurance provider and plan" name="provider"/>
                 </div>
-                <button type="submit" className="btn btn-primary btn-md"> SEARCH </button>
+                <button type="submit" className="btn btn-primary btn-md"> Search </button>
               </form>
               {this.state.searchClicked === false ?
               <div className="searchResults">
