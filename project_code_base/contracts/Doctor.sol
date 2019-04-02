@@ -53,9 +53,9 @@ contract Doctors {
         doctorsList.push(doctorsCount) -1;
         addDate(doctorsCount, "04/04/2019");
         addDate(doctorsCount, "04/05/2019");
+        addDate(doctorsCount, "04/08/2019");
         addDate(doctorsCount, "04/09/2019");
         addDate(doctorsCount, "04/10/2019");
-        addDate(doctorsCount, "04/11/2019");
         doctorAdded(doctorsCount);
 
       //  doctor.dates = _date;
