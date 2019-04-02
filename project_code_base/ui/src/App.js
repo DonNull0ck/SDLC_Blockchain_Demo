@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Signup from './patient_form/Signup'
-import Appointments from './appointments/Appointments'
 import Home from './home/home'
 
 
@@ -134,9 +133,11 @@ class App extends Component {
              />
              <Route
               path="/appointments"
-              render={(props) => <Appointments {...props}
+              render={(props) => <Home {...props}
               drizzle={this.props.drizzle}
-              drizzleState={this.state.drizzleState}/>}
+              drizzleState={this.state.drizzleState}
+              doctor={doctor}
+              authProps={authProps}/>}
              />
              <Route
               path="/doctors"

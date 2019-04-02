@@ -95,7 +95,13 @@ contract Doctors {
        Doctor storage doctor = doctors[_id];
        bytes32  _pastApp = doctor.appointments[_appIndex];
        doctor.pastAppointments.push(_pastApp);
-       delete doctor.appointments[_appIndex];
+       if (_appIndex >= doctor.appointments.length) return;
+        delete doctor.appointments[_appIndex];
+        for (uint i = _appIndex; i<doctor.appointments.length - 1; i++){
+            doctor.appointments[i] = doctor.appointments[i+1];
+        }
+       
+        //doctor.appointments.length--;
     }
 
 
@@ -104,6 +110,10 @@ contract Doctors {
         Date memory _dates = dates[_id];
         Time memory _times = times[_id];
         return (doctor.doctorObj,doctor.practiceAreas,doctor.appointments);
+    }
+    function getDoctorInfo(uint _id) public view returns (string) {
+        Doctor memory doctor = doctors[_id];
+        return (doctor.doctorObj);
     }
 
     function stringToBytes32(string memory _source) returns (bytes32 result) {

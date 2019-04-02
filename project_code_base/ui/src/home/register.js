@@ -46,8 +46,8 @@ class CreateProfile extends Component {
          dob: '',
          ssn: '123-45-6789',
          pass:'',
-         insuranceProvider: 'hmbcbs',
-         insuranceGroupNumber: 'sdlc'
+         insuranceProvider: 'Highmark',
+         insuranceGroupNumber: '01234567'
        }
       };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -136,7 +136,9 @@ class CreateProfile extends Component {
       );
     }
     if(this.getTxStatus() === "success"){
-      this.props.history.push('/profile');
+      return(
+      <p className="errorMessage">Your account has been created! <Link to="/login">please login here!</Link></p>
+      );
     }
     //console.log(doctor);
     return (

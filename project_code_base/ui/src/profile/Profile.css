@@ -15,4 +15,55 @@ ul.breadcrumb li:hover,ul.breadcrumb li.active{
 }
 .dateSelected {
 	background: #5cb85c !important;
+	padding:14px !important;
+}
+.list-group-item {
+	color:black;
+}
+.profile-img{
+	width: 150px;
+	height: 150px;
+	margin-left: 50%;
+	margin-right: 50%;
+}
+
+.myapp-container table{
+	width:80%;
+	margin-left: 10%;
+	margin-right:10%;
+}
+
+.myapp-container table th{
+	color:#2f6690;
+	font-size: 18px;
+	font-weight: bold;
+	padding:5px;
+	margin-left: 10px;
+	margin-right:10px;
+	text-align: center;
+}
+
+.myapp-container td{
+	font-size: 18px;
+	padding:10px;
+	text-align: center;
+	color: black;
+}
+
+.myapp-container tbody{
+	padding:5px;
+	border:solid 1px #d2d2d2;
+	border-radius: 4px;
+
+}
+
+.myapp-container tr{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border-bottom: solid 1px #d2d2d2;
+
+}
+.panel-body label{
+	color: black;
 }

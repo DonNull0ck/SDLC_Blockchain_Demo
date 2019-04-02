@@ -20,12 +20,13 @@ class AddDoctor extends Component {
         name:'Dr.Henry Richardson',
         type: 'Primary Care',
         phone:'412-123-4567',
-        address1: 'Alleghney General Hospital',
+        address1: 'Allegheny General Hospital',
         address2: '123 main street',
         zip:'12345',
         practice: '',
       },
-      practiceAreas: []
+      practiceAreas: [],
+      practiceAreasObj: []
 
   };
 
@@ -65,7 +66,13 @@ class AddDoctor extends Component {
    // console.log(index);
   }
 handleSubmit(event) {
-    event.preventDefault();
+   event.preventDefault();
+    const state = this.state;
+    if(state.practiceAreas.length < 1){
+        var x = document.getElementsByName("practice")[0];
+         x.required = true;
+         return;
+    }
     const { drizzle, drizzleState } = this.props;
    // let drizzle know we want to call the `setPatient` method with `value`
    const contract = drizzle.contracts.Doctors;
@@ -76,6 +83,7 @@ handleSubmit(event) {
    }
    let practiceAreasObj = {};
    this.state.practiceAreas.forEach(function(val,index){
+        //state.practiceAreasObj.push(val);
         practiceAreasObj[index] = val;
    });
    
@@ -99,6 +107,7 @@ handleSubmit(event) {
             from: drizzleState.accounts[0], gas: 2000000});
             // save the `stackId` for later reference
             this.setState({ stackId });
+     state.practiceAreasObj = [];
 }   
 // get transaction status
 getTxStatus = () => {
@@ -173,12 +182,12 @@ getTxStatus = () => {
                                 name="zip" required/>
                             </div>
                             <div className="form-group col-sm-6">
-                                <pre>
+                                <ul className="list-group">
                                 {this.state.practiceAreas.map((item,index) => 
-                                    <p key={index} className="practice-areas">{item}<span className="practice-areas-cancel" onClick={(event) => this.removePracticeAreas(event,index)}>X</span></p>
-                                )
+                                    <li className="list-group-item practice-areas" key={index} >{item}<span className="practice-areas-cancel" onClick={(event) => this.removePracticeAreas(event,index)}>X</span></li>
+                                    )
                                 }
-                                </pre>
+                                </ul>
                                 <label htmlFor="practice">Practice Areas:</label>
                                 <input type="text" className="form-control" placeholder="Practice areas"
                                 value={this.state.doctor.practice}
