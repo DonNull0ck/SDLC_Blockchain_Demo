@@ -95,6 +95,7 @@ class ReviewAppointment extends Component {
 									<p><span className="glyphicon glyphicon-earphone"></span> {this.props.doctor.doctor.phone}</p>
 									<p>Reason for Visit(Required)</p>
 									<textarea className="form-control" rows="5" name="reasonforvisit" required></textarea>
+
 							</div>
 
 							<div className = "col-sm-4 review-appointments">
